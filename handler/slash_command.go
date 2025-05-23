@@ -1,8 +1,8 @@
 package handler
 
 import (
-	slashcommand "github.com/MHNightCat/mhcat/slash_command"
 	"github.com/bwmarrin/discordgo"
+	slashcommand "github.com/yorukot/mhcat/slash_command"
 )
 
 func OnSlashCommand(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -12,5 +12,6 @@ func OnSlashCommand(s *discordgo.Session, i *discordgo.InteractionCreate) {
 }
 
 var commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
-	"set-language": slashcommand.LocalesCommandRun,
+	"set-language":  slashcommand.LocalesCommandRun,
+	"reaction-role": slashcommand.ReactionRoleCommandRun,
 }

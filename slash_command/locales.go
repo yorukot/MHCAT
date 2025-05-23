@@ -1,12 +1,14 @@
 package slashcommand
 
 import (
-	"github.com/MHNightCat/mhcat/db"
-	it "github.com/MHNightCat/mhcat/locales"
-	"github.com/MHNightCat/mhcat/model"
-	"github.com/MHNightCat/mhcat/pkg"
+	"errors"
+
 	"github.com/bwmarrin/discordgo"
 	"github.com/charmbracelet/log"
+	"github.com/yorukot/mhcat/db"
+	it "github.com/yorukot/mhcat/locales"
+	"github.com/yorukot/mhcat/model"
+	"github.com/yorukot/mhcat/pkg"
 )
 
 var LocalesCommand = discordgo.ApplicationCommand{}
@@ -34,10 +36,6 @@ func InitLocalesCommand() {
 						Name:  "繁體中文",
 						Value: "zh-TW",
 					},
-					{
-						Name:  "简体中文",
-						Value: "zh-CN",
-					},
 				},
 			},
 		},
@@ -53,24 +51,25 @@ func LocalesCommandRun(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	}
 
 	insertData := model.Lanuage{
-		GuildId: i.GuildID,
+		GuildId:  i.GuildID,
 		Language: optionMap["language"].Value.(string),
 	}
 
 	udateData, err := db.FileOneAndUpdateGuildLanguageSetting(insertData)
 	if err != nil {
 		log.Error("Error update language data to database, data:", insertData, err)
+		dbErr := errors.New("Failed to update language settings: " + err.Error())
 		s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
 				Embeds: []*discordgo.MessageEmbed{
-					pkg.ErrorEmbed("slashcmd.locales.error.error_database_operate", nil, udateData.Language),
+					pkg.ErrorEmbed("slashcmd.locales.error.error_database_operate", dbErr, udateData.Language),
 				},
 			},
 		})
 		return
 	}
-	
+
 	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{

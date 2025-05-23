@@ -10,3 +10,70 @@ slashcmd: #slash command
       error_database_operate: An unknown error occurred while updating data to the database
     successful:
       successful_update_data: Successfully updated your language to %s!
+  reaction_role:
+    name: reaction-role
+    description: Create a reaction role setup
+    subcommands:
+      add:
+        name: add
+        description: Add a new reaction role
+      delete:
+        name: delete
+        description: Delete a reaction role
+      list:
+        name: list
+        description: List all reaction roles in this server
+    options:
+      messageURL:
+        name: message-url
+        description: Message URL to add reaction roles to
+      emoji:
+        name: emoji
+        description: Emoji that users will react with
+      role:
+        name: role
+        description: Role to assign when users react
+      notify:
+        name: notify
+        description: Send users a DM when they get or lose the role
+      number:
+        name: number
+        description: Number from the reaction role list (use /reaction-role list to see numbers)
+    error:
+      invalid_message: Could not find the specified message
+      invalid_role: Could not find or access the specified role
+      error_database_operate: An unknown error occurred while saving to the database
+      reaction_role_already_exists: This emoji is already configured for this message
+      not_found: Reaction role not found for this message and emoji
+      no_permission: You do not have permission to manage roles
+      guild_access: Could not access guild information
+      member_access: Could not access member information
+      bot_access: Could not access bot information
+      role_hierarchy: You cannot manage a role that is higher than or equal to your highest role
+      bot_role_hierarchy: Bot cannot manage a role that is higher than or equal to its highest role
+      cross_guild: You can only manage reaction roles for messages in this server
+      channel_access: You do not have permission to access the target channel
+      everyone_role: You cannot use @everyone role for reaction roles
+      managed_role: You cannot use managed roles (bot roles, integration roles) for reaction roles
+      invalid_number: Invalid number, please use a number from the reaction role list
+      missing_parameters: Please provide either a number from the list, or both message URL and emoji
+    successful:
+      successful_setup: Successfully set up reaction role! Users who react with %s will receive the %s role.
+      successful_delete: Successfully deleted reaction role for emoji %s
+    list:
+      title: Reaction Roles in this Server
+      no_roles: No reaction roles configured in this server
+      message: Message
+      message_id: Message ID
+      emoji: Emoji
+      role: Role
+      notify: Notify
+      click_to_view: Click to view message
+      notify_yes: Yes
+      notify_no: No
+      message_not_found: Message not found
+
+role:
+  notification:
+    assigned: You have been given the **%s** role
+    removed: The **%s** role has been removed from you

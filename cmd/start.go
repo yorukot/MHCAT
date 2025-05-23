@@ -5,14 +5,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	cfg "github.com/MHNightCat/mhcat/config"
-	"github.com/MHNightCat/mhcat/handler"
-	it "github.com/MHNightCat/mhcat/locales"
 	"github.com/bwmarrin/discordgo"
 	"github.com/charmbracelet/log"
 	"github.com/servusdei2018/shards/v2"
+	cfg "github.com/yorukot/mhcat/config"
+	"github.com/yorukot/mhcat/handler"
+	it "github.com/yorukot/mhcat/locales"
 )
-
 
 func Start() {
 	var err error
@@ -32,7 +31,9 @@ func Start() {
 	Mgr.AddHandler(handler.MessageCreate)
 	Mgr.AddHandler(handler.OnConnect)
 	Mgr.AddHandler(handler.OnSlashCommand)
-	Mgr.RegisterIntent(discordgo.IntentsGuildMessages)
+	Mgr.AddHandler(handler.OnReaction)
+	Mgr.AddHandler(handler.OnReactionRemove)
+	Mgr.RegisterIntent(discordgo.IntentsAll)
 
 	log.Info("Starting shard manager...")
 

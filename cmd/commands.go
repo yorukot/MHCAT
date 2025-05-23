@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	slashcommand "github.com/MHNightCat/mhcat/slash_command"
 	"github.com/bwmarrin/discordgo"
+	slashcommand "github.com/yorukot/mhcat/slash_command"
 )
 
 var slashCommandsList = []*discordgo.ApplicationCommand{
 	&slashcommand.LocalesCommand,
+	&slashcommand.ReactionRoleCommand,
 }

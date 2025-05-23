@@ -3,57 +3,30 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 	"slices"
 	"time"
 
-	cfg "github.com/MHNightCat/mhcat/config"
-	"github.com/MHNightCat/mhcat/db"
-	slashcommand "github.com/MHNightCat/mhcat/slash_command"
 	"github.com/charmbracelet/log"
-	"github.com/pelletier/go-toml/v2"
+	cfg "github.com/yorukot/mhcat/config"
+	"github.com/yorukot/mhcat/db"
+	slashcommand "github.com/yorukot/mhcat/slash_command"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-
 func initConfig() {
-	fileData, err := os.ReadFile("config/config.toml")
-
-	if err != nil {
-		log.Error("Fail to load MHCAT config file,", err)
-		return
-	}
-
-	err = toml.Unmarshal(fileData, &cfg.BotConfig)
-
-	if err != nil {
-		log.Error("Fail to unmarshal mhcat config file,", err)
-		return
-	}
-	
+	cfg.LoadConfig()
 }
 
 func initImageConfig() {
-	fileData, err := os.ReadFile("config/imageConfig.toml")
-
-	if err != nil {
-		log.Error("Fail to load MHCAT iamge config file,", err)
-		return
-	}
-
-	err = toml.Unmarshal(fileData, &cfg.ImageConfig)
-
-	if err != nil {
-		log.Error("Fail to unmarshal mhcat iamge config file,", err)
-		return
-	}
-	
+	cfg.LoadImageConfig()
 }
 
+// initCommand initializes the slash command
 func initCommand() {
 	slashcommand.InitLocalesCommand()
+	slashcommand.InitReactionRoleCommand()
 }
 
 func connectToMongodb() {

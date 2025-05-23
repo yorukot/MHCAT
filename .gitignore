@@ -22,3 +22,9 @@ go.work
 
 # serect
 config.toml
+
+# tmp
+tmp/*
+
+# env
+.env

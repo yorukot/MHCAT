@@ -1,12 +1,79 @@
 slashcmd:  #slash command
   locales:
-    name: set-language
-    description: Set your preferred language for MHCAT
+    name: 選擇語言
+    description: 設置你的偏好語言
     options:
       language:
-        name: language
-        description: Language to change to
+        name: 語言
+        description: 要更改的語言
     error:
-      error_database_operate: An unknown error occurred while updating data to the database
+      error_database_operate: 更新數據庫時發生未知錯誤
     successful:
-      successful_update_data: Successfully updated your language to %s!
+      successful_update_data: 成功更新你的語言為 %s!
+  reaction_role:
+    name: 表情符號角色
+    description: 創建表情符號角色設置
+    subcommands:
+      add:
+        name: 新增
+        description: 新增一個表情符號角色
+      delete:
+        name: 刪除
+        description: 刪除一個表情符號角色
+      list:
+        name: 列表
+        description: 列出此伺服器中的所有表情符號角色
+    options:
+      messageURL:
+        name: 訊息網址
+        description: 要添加反應角色的訊息網址
+      emoji:
+        name: 表情符號
+        description: 用戶將反應的表情符號
+      role:
+        name: 角色
+        description: 用戶反應時分配的角色
+      notify:
+        name: 通知
+        description: 當用戶獲得或失去角色時發送私信通知
+      number:
+        name: 編號
+        description: 反應角色列表中的編號（使用 /reaction-role list 查看編號）
+    error:
+      invalid_message: 找不到指定的訊息
+      invalid_role: 找不到或無法訪問指定的角色
+      error_database_operate: 保存到數據庫時發生未知錯誤
+      reaction_role_already_exists: 此表情符號已為此訊息配置
+      not_found: 找不到此訊息和表情符號的反應角色
+      no_permission: 你沒有管理角色的權限
+      guild_access: 無法訪問伺服器資訊
+      member_access: 無法訪問成員資訊
+      bot_access: 無法訪問機器人資訊
+      role_hierarchy: 你無法管理高於或等於你最高角色的角色
+      bot_role_hierarchy: 機器人無法管理高於或等於其最高角色的角色
+      cross_guild: 你只能管理此伺服器中訊息的反應角色
+      channel_access: 你沒有訪問目標頻道的權限
+      everyone_role: 你不能使用 @everyone 角色作為反應角色
+      managed_role: 你不能使用受管理的角色（機器人角色、整合角色）作為反應角色
+      invalid_number: 無效的編號，請使用反應角色列表中的編號
+      missing_parameters: 請提供列表中的編號，或同時提供訊息網址和表情符號
+    successful:
+      successful_setup: 成功設置反應角色！用戶使用 %s 反應將獲得 %s 角色。
+      successful_delete: 成功刪除表情符號 %s 的反應角色
+    list:
+      title: 此伺服器中的表情符號角色
+      no_roles: 此伺服器中未配置表情符號角色
+      message: 訊息
+      message_id: 訊息 ID
+      emoji: 表情符號
+      role: 角色
+      notify: 通知
+      click_to_view: 點擊查看訊息
+      notify_yes: 是
+      notify_no: 否
+      message_not_found: 找不到訊息
+
+role:
+  notification:
+    assigned: 你已被賦予 **%s** 角色
+    removed: 你已失去 **%s** 角色
