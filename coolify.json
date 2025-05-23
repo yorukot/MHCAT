@@ -20,7 +20,7 @@
       "environment": {
         "required": [
           "DISCORD_TOKEN",
-          "MONGODB_CONNECTION_STRING",
+          "MONGODB_CONNECT_STRING",
           "MONGODB_DATABASE_NAME"
         ],
         "optional": [
@@ -42,7 +42,7 @@
       "required": true,
       "type": "secret"
     },
-    "MONGODB_CONNECTION_STRING": {
+    "MONGODB_CONNECT_STRING": {
       "description": "MongoDB Connection URI",
       "required": true,
       "type": "secret"
