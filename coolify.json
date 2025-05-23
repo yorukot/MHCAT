@@ -1,0 +1,75 @@
+{
+  "name": "MHCAT Discord Bot",
+  "description": "A Discord bot with reaction roles and internationalization support",
+  "type": "docker-compose",
+  "repository": "https://github.com/your-username/mhcat.git",
+  "branch": "main",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "services": {
+    "mhcat": {
+      "type": "application",
+      "healthcheck": {
+        "enabled": false,
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3
+      },
+      "environment": {
+        "required": [
+          "DISCORD_TOKEN",
+          "MONGODB_URI",
+          "MONGODB_DATABASE"
+        ],
+        "optional": [
+          "DEFAULT_LANGUAGE"
+        ]
+      },
+      "volumes": [
+        {
+          "name": "logs",
+          "mount": "/app/logs",
+          "type": "volume"
+        }
+      ]
+    }
+  },
+  "environment_variables": {
+    "DISCORD_TOKEN": {
+      "description": "Discord Bot Token",
+      "required": true,
+      "type": "secret"
+    },
+    "MONGODB_URI": {
+      "description": "MongoDB Connection URI",
+      "required": true,
+      "type": "secret"
+    },
+    "MONGODB_DATABASE": {
+      "description": "MongoDB Database Name",
+      "required": true,
+      "default": "mhcat"
+    },
+    "DEFAULT_LANGUAGE": {
+      "description": "Default Language (en or zh-TW)",
+      "required": false,
+      "default": "en"
+    }
+  },
+  "documentation": {
+    "setup": [
+      "1. Set your Discord Bot Token in DISCORD_TOKEN environment variable",
+      "2. Configure MongoDB connection in MONGODB_URI",
+      "3. Set the database name in MONGODB_DATABASE",
+      "4. Optionally set DEFAULT_LANGUAGE (en or zh-TW)"
+    ],
+    "features": [
+      "Reaction Role Management",
+      "Internationalization (English & Traditional Chinese)",
+      "Permission-based Access Control",
+      "MongoDB Integration"
+    ]
+  }
+} 

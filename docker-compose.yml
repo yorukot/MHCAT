@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mhcat:
+    build: .
+    container_name: mhcat-bot
+    restart: unless-stopped
+    environment:
+      # Copy your environment variables from .env file
+      # or set them directly here
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - MONGODB_URI=${MONGODB_URI}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
+    labels:
+      # Coolify labels for service discovery and management
+      - "coolify.managed=true"
+      - "coolify.version=4"
+      - "coolify.type=application"
+      - "coolify.name=mhcat-discord-bot"
+      # Health check configuration
+      - "coolify.healthcheck.enabled=false"
+      # Since this is a Discord bot, it doesn't need HTTP health checks
+      # If you add a web interface later, you can enable health checks
+    volumes:
+      # Optional: Mount logs directory for persistent logging
+      - mhcat_logs:/app/logs
+    # Remove .env volume mount for Coolify - use environment variables instead
+    networks:
+      - mhcat-network
+    # If you need to connect to a local MongoDB
+    # depends_on:
+    #   - mongodb
+
+  # Uncomment if you want to run MongoDB in Docker
+  # mongodb:
+  #   image: mongo:7
+  #   container_name: mhcat-mongodb
+  #   restart: unless-stopped
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-admin}
+  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-password}
+  #   volumes:
+  #     - mongodb_data:/data/db
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - mhcat-network
+  #   labels:
+  #     - "coolify.managed=true"
+  #     - "coolify.type=database"
+  #     - "coolify.name=mhcat-mongodb"
+
+networks:
+  mhcat-network:
+    driver: bridge
+    labels:
+      - "coolify.managed=true"
+
+volumes:
+  mhcat_logs:
+    labels:
+      - "coolify.managed=true"
+  # mongodb_data:
+  #   labels:
+  #     - "coolify.managed=true" 
