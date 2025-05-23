@@ -20,8 +20,8 @@
       "environment": {
         "required": [
           "DISCORD_TOKEN",
-          "MONGODB_URI",
-          "MONGODB_DATABASE"
+          "MONGODB_CONNECTION_STRING",
+          "MONGODB_DATABASE_NAME"
         ],
         "optional": [
           "DEFAULT_LANGUAGE"
@@ -42,12 +42,12 @@
       "required": true,
       "type": "secret"
     },
-    "MONGODB_URI": {
+    "MONGODB_CONNECTION_STRING": {
       "description": "MongoDB Connection URI",
       "required": true,
       "type": "secret"
     },
-    "MONGODB_DATABASE": {
+    "MONGODB_DATABASE_NAME": {
       "description": "MongoDB Database Name",
       "required": true,
       "default": "mhcat"

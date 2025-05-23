@@ -9,8 +9,8 @@ services:
       # Copy your environment variables from .env file
       # or set them directly here
       - DISCORD_TOKEN=${DISCORD_TOKEN}
-      - MONGODB_URI=${MONGODB_URI}
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
+      - MONGODB_DATABASE_NAME=${MONGODB_DATABASE_NAME}
       - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
     labels:
       # Coolify labels for service discovery and management
