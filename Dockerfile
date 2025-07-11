@@ -1,16 +1,14 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
 
-# 先更新 npm 到最新版本，然後再執行安裝
-RUN npm install -g npm@latest && \
-    npm ci
+RUN npm ci
 
 COPY . .
 
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 
 RUN apk add --no-cache ttf-dejavu fontconfig
 
@@ -28,5 +26,4 @@ RUN chown -R nodejs:nodejs /app
 
 USER nodejs
 
-# 啟動機器人
 CMD ["node", "shard.js"]
