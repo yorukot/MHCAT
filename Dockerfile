@@ -1,14 +1,16 @@
-FROM node:18-alpine as builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+# 先更新 npm 到最新版本，然後再執行安裝
+RUN npm install -g npm@latest && \
+    npm ci
 
 COPY . .
 
-FROM node:18-alpine
+FROM node:18-alpine AS runner
 
 RUN apk add --no-cache ttf-dejavu fontconfig
 
