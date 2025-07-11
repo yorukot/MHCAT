@@ -24,7 +24,18 @@ COPY . .
 
 FROM node:20-alpine AS runner
 
-RUN apk add --no-cache ttf-dejavu fontconfig
+# Add runtime dependencies for canvas
+RUN apk add --no-cache \
+    cairo \
+    jpeg \
+    pango \
+    giflib \
+    pixman \
+    pangomm \
+    libjpeg-turbo \
+    freetype \
+    ttf-dejavu \
+    fontconfig
 
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001
