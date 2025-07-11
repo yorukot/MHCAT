@@ -45,7 +45,14 @@ WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app ./
 
-ENV NODE_ENV=production
+# Set default environment variables
+ENV NODE_ENV=production \
+    TOKEN="" \
+    MONGOOSE_CONNECTION_STRING="" \
+    JOIN_WEBHOOK="" \
+    LEAVE_WEBHOOK="" \
+    READY_WEBHOOK="" \
+    REPORT_WEBHOOK=""
 
 RUN chown -R nodejs:nodejs /app
 
