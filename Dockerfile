@@ -2,6 +2,20 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Add build dependencies
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    giflib-dev \
+    pixman-dev \
+    pangomm-dev \
+    libjpeg-turbo-dev \
+    freetype-dev
+
 COPY package*.json ./
 
 RUN npm ci
