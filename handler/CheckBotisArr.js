@@ -3,9 +3,8 @@ const {
     EmbedBuilder,
     WebhookClient
 } = require('discord.js')
-const config = require('../config.json')
 const readywebhook = new WebhookClient({
-    url: config.readyWebhook
+    url: process.env.READY_WEBHOOK
 })
 
 const MAX_PING = 400;

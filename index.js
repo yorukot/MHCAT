@@ -65,12 +65,11 @@ const client = new Client({
 module.exports = client;
 
 const {
-    mongooseConnectionString,
     color,
     emoji
 } = require("./config.json");
 const mongoose = require("mongoose");
-mongoose.connect(mongooseConnectionString, {
+mongoose.connect(process.env.MONGOOSE_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     autoIndex: false
@@ -182,4 +181,4 @@ client.receiveBotInfo = async () => {
 
 }
 
-client.login(client.config.token)
+client.login(process.env.TOKEN)

@@ -14,7 +14,6 @@ const {
     Permissions,
     WebhookClient
 } = require('discord.js');
-const { reportwebhook } = require('../../config.json')
 const isurl = require('is-url')
 module.exports = {
     name: '詐騙網址回報',
@@ -39,7 +38,7 @@ module.exports = {
                 web: { $regex: web }
                 }, async (err, data) => {
                     if(!data) {
-                        const dsadsa = new WebhookClient({url:`${reportwebhook}`})
+                        const dsadsa = new WebhookClient({url:`${process.env.REPORT_WEBHOOK}`})
                         dsadsa.send(`\`\`\`${web}\`\`\`\nby:<@${interaction.user.id}>`)
                         const announcement_set_embed = new EmbedBuilder()
                         .setTitle("<:fraudalert:1000408260777611355> 自動偵測詐騙連結")
@@ -52,7 +51,7 @@ module.exports = {
                     if(web.includes(data.web) || aaaaa.includes(web)){
                         return errors("該網站已被回報過")
                     }else{
-                        const dsadsa = new WebhookClient({url:`${reportwebhook}`})
+                        const dsadsa = new WebhookClient({url:`${process.env.REPORT_WEBHOOK}`})
                         dsadsa.send(`\`\`\`${web}\`\`\`\nby:<@${interaction.user.id}>`)
                         const announcement_set_embed = new EmbedBuilder()
                         .setTitle("<:fraudalert:1000408260777611355> 自動偵測詐騙連結")

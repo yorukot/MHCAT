@@ -23,10 +23,10 @@ const {
   values
 } = require('lodash');
 const joinWebhook = new WebhookClient({
-  url: client.config.joinWebhook
+  url: process.env.JOIN_WEBHOOK
 })
 const leaveWebhook = new WebhookClient({
-  url: client.config.leaveWebhook
+  url: process.env.LEAVE_WEBHOOK
 })
 
 client.on("guildMemberAdd", (member) => {

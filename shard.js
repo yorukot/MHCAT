@@ -9,14 +9,14 @@ const manager = new ClusterManager(`${__dirname}/index.js`, {
   totalShards: 'auto',
   shardsPerClusters: 1,
   mode: "process",
-  token: config.token,
+  token: process.env.TOKEN,
   totalClusters: "auto",
 });
 let optional = {
   totalShards: 'auto',
   shardsPerClusters: 1,
   mode: "process",
-  token: config.token,
+  token: process.env.TOKEN,
   totalClusters: "auto",
 };
 manager.extend(

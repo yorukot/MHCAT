@@ -1,12 +1,5 @@
 {
-    "token" : "",
-    "mongooseConnectionString": "",
     "prefix": "/",
-    "joinWebhook": "",
-    "leaveWebhook": "",
-    "readyWebhook": "",
-    "reportwebhook": "",
-    "dashboardURL": "",
     "color": {
         "greate": "#53FF53",
         "error": "#EA0000"

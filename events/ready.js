@@ -3,12 +3,11 @@ const {
     EmbedBuilder,
     WebhookClient
 } = require('discord.js')
-const config = require('../config')
 const {
     Cluster
 } = require('discord-hybrid-sharding')
 const readywebhook = new WebhookClient({
-    url: config.readyWebhook
+    url: process.env.READY_WEBHOOK
 })
 client.once('ready', () => {
     const chalk = require('chalk')
