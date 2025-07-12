@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { ClusterManager, ReClusterManager, HeartbeatManager } = require(
   "discord-hybrid-sharding",
 );
