@@ -45,7 +45,7 @@ module.exports = {
         description: '輸入玩家查詢的背景(默認為discord色)支援png和jpg(可使用discord的複製連結)最佳大小為931*231',
         required: false
     }],
-    video: 'https://docs.mhcat.xyz/docs/voice_xp_set',
+    video: 'https://docsmhcat.yorukot.me/docs/voice_xp_set',
     UserPerms: '訊息管理',
     emoji: `<:configuration:984010500608249886>`,
     run: async (client, interaction, options, perms) => {

@@ -38,12 +38,6 @@ client.on("messageReactionAdd", async (reaction, user) => {
             if (!role || Number(role.position) >= Number(reaction.message.guild.members.me.roles.highest.position)) return errors("我沒有權限給大家這個身分組或是身分組被刪除了(請把我的身分組調高)!")
             const member = reaction.message.guild.members.cache.get(user.id)
             member.roles.add(role)
-            const warn = new EmbedBuilder()
-                .setColor("Green")
-                .setTitle(`<a:green_tick:994529015652163614> | 成功增加\`${role.name}\`!`)
-            user.send({
-                embeds: [warn]
-            })
         }
     })
 })
@@ -70,12 +64,6 @@ client.on("messageReactionRemove", async (reaction, user) => {
             if (!role || Number(role.position) >= Number(reaction.message.guild.members.me.roles.highest.position)) return errors("我沒有權限給大家這個身分組或是身分組被刪除了(請把我的身分組調高)!")
             const member = reaction.message.guild.members.cache.get(user.id)
             member.roles.remove(role)
-            const warn = new EmbedBuilder()
-                .setColor("Green")
-                .setTitle(`<a:green_tick:994529015652163614> | 成功刪除\`${role.name}\`!`)
-            user.send({
-                embeds: [warn]
-            })
         }
     })
 })

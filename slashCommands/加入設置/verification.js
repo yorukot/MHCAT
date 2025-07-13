@@ -20,7 +20,7 @@ module.exports = {
     name: '驗證',
     cooldown: 5,
     description: '確保你不是機器人',
-    video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     emoji: `<:tickmark:985949769224556614>`,
     run: async (client, interaction, options, perms) => {
         await interaction.deferReply({ ephemeral: true });

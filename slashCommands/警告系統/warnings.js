@@ -25,7 +25,7 @@ module.exports = {
         description: '要收尋的使用者!',
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:searching:986107902777491497>`,
     run: async (client, interaction, options, perms) => {

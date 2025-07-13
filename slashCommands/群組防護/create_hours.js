@@ -64,7 +64,7 @@ module.exports = {
         description: '刪除之前的設定發送頻道',
     }],
     UserPerms: '踢出用戶',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.meommands/statistics.html',
     emoji: `<:onehour:1000310711941087293>`,
     run: async (client, interaction, options, perms) => {
         try {

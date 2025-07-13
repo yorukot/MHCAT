@@ -34,7 +34,7 @@ module.exports = {
         required: false,
         type: ApplicationCommandOptionType.String,
     }],
-    video: 'https://docs.mhcat.xyz/docs/help',
+    video: 'https://docsmhcat.yorukot.me/docs/help',
     emoji: `<:help:985948179709186058>`,
     run: async (client, interaction, options, perms) => {
         try {
@@ -77,12 +77,12 @@ module.exports = {
             }); 
             //embed
             const embed = new EmbedBuilder()
-                .setAuthor({name: `MHCAT`, iconURL:`https://media.discordapp.net/attachments/991337796960784424/993437253311410208/My_project_9.png`, URL:`https://discord.com/api/oauth2/authorize?client_id=964185876559196181&permissions=8&scope=bot%20applications.commands`})
+                .setAuthor({name: `MHCAT`, iconURL:`https://i.imgur.com/AQAodBA.png`, URL:`https://discord.com/api/oauth2/authorize?client_id=964185876559196181&permissions=8&scope=bot%20applications.commands`})
                 .setDescription(`**<a:cool:984263702897360897> 嗨嗨，你發現了酷東西\n使用我來讓你的discord更棒!!\n想要了解某個類別請使用下方的選單\n如要查看特定的指令請使用\`/help 指令名稱\`
 \n<:9605discordslashcommand:982559784429563925> 指令一律使用斜線命令，只需打\`/指令名稱\`即可使用**
 \n<a:buycoffeeforme:986560638304256051> [幫我買杯咖啡!](https://www.buymeacoffee.com/mhcat)
 
-[隱私權聲明](https://docs.mhcat.xyz/terms/privacy_policy) [服務條款](https://docs.mhcat.xyz/terms/Terms_of_Service)`)
+[隱私權聲明](https://docsmhcat.yorukot.me/terms/privacy_policy) [服務條款](https://docsmhcat.yorukot.me/terms/Terms_of_Service)`)
                 .setFooter({
                     text: `${interaction.user.tag}的查詢`,
                     iconURL:interaction.user.displayAvatarURL({

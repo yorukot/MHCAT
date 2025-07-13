@@ -29,7 +29,7 @@ module.exports = {
         description: '輸入加入訊息要在那發送!',
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.meommands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:comments:985944111725019246>`,
 

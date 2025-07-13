@@ -49,7 +49,7 @@ module.exports = {
         }]
     }],
     UserPerms: '服主',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/statistics.html',
     emoji: `<:onehour:1000310711941087293>`,
     run: async (client, interaction, options, perms) => {
         try {

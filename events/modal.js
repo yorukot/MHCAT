@@ -595,7 +595,7 @@ client.on('interactionCreate', async (interaction) => {
         function isImgUrl(url) {
             return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
           }
-        if(img && !isImgUrl(img)) return errors('你傳送的並不是圖片!可至https://docs.mhcat.xyz/allcommands/加入設置/join_message查看教學') 
+        if(img && !isImgUrl(img)) return errors('你傳送的並不是圖片!可至https://docsmhcat.yorukot.me/allcommands/加入設置/join_message查看教學') 
     if (!validateColor(color) && (color !== "Random" && color !== "RANDOM")) return errors('你傳送的並不是顏色(色碼)')
         join_message.findOne({
             guild: interaction.guild.id,

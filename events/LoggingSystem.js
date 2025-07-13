@@ -38,7 +38,7 @@ client.on(Events.MessageUpdate, (oldContent, newContent) => {
                 extension: 'png'
             }) ? oldContent.author.avatarURL({
                 extension: 'png'
-            }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+            }) : "https://i.imgur.com/B91C90T.png"}`
             })
             .setColor(`#46A3FF`)
             .setDescription(`**<:edit:1084846013476511765> 訊息編輯者: <@${oldContent.author.id}> | <:Channel:994524759289233438> 訊息編輯位置: <#${oldContent.channel.id}>**`)
@@ -94,7 +94,7 @@ client.on(Events.MessageDelete, async (message) => {
                     extension: 'png'
                 }) ? message.author.avatarURL({
                     extension: 'png'
-                }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                }) : "https://i.imgur.com/B91C90T.png"}`
             })
             .setColor('#84C1FF')
             .setDescription(`**<:trash:1084846016798396526> 訊息刪除者: <@${author.id}> | <:user:986064391139115028> 訊息發送者:<@${message.author.id}> | <:Channel:994524759289233438> 訊息刪除位置: <#${message.channel.id}>**`)
@@ -142,7 +142,7 @@ client.on(Events.ChannelUpdate, (oldChannel, newChannel) => {
                         extension: 'png'
                     }) ? user.avatarURL({
                         extension: 'png'
-                    }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                    }) : "https://i.imgur.com/B91C90T.png"}`
                 })
                 .setColor('#FF8040')
                 .setDescription(`**<:chat:1085254765342109697> 頻道主題編輯者: <@${user.id}> | <:Channel:994524759289233438> 頻道: <#${oldChannel.id}>**`)
@@ -269,7 +269,7 @@ client.on(Events.ChannelUpdate, (oldChannel, newChannel) => {
                     extension: 'png'
                 }) ? user.avatarURL({
                     extension: 'png'
-                }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#FF5809')
                     .setDescription(`**<:shield:1019529265101930567> 頻道權限編輯者: <@${user.id}> | <:Channel:994524759289233438> 頻道: <#${oldChannel.id}>**`)
@@ -312,7 +312,7 @@ client.on(Events.VoiceStateUpdate, (oldState, newState) => {
                     extension: 'png'
                 }) ? newState.member.user.avatarURL({
                     extension: 'png'
-                }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#F235FA')
                     .setDescription(`**<:user:986064391139115028> 使用者: <@${newState.member.user.id}> | <:voice:1086216862355951636> 頻道: <#${newState.channelId}>**`)
@@ -338,7 +338,7 @@ client.on(Events.VoiceStateUpdate, (oldState, newState) => {
                     extension: 'png'
                 }) ? oldState.member.user.avatarURL({
                     extension: 'png'
-                }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#FA359A')
                     .setDescription(`**<:user:986064391139115028> 使用者: <@${oldState.member.user.id}> | <:voice:1086216862355951636> 頻道: <#${oldState.channelId}>**`)

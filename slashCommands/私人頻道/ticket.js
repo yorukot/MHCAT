@@ -35,7 +35,7 @@ module.exports = {
         description: '輸入管理員身分組(有這個身分組的能夠管理私人頻道)!',
         required: true,
     }],
-   // video: 'https://docs.mhcat.xyz/commands/announcement.html',
+   // video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:ticket:985945491093205073>`,
     run: async (client, interaction, options, perms) => {

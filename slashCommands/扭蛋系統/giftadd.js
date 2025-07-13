@@ -52,7 +52,7 @@ module.exports = {
         description: '當抽中後是否要給予代幣',
         required: false,
     }],
-    video: 'https://docs.mhcat.xyz/docs/prize_add',
+    video: 'https://docsmhcat.yorukot.me/docs/prize_add',
     emoji: `<:add1:981722904251215872>`,
     UserPerms: '訊息管理',
     run: async (client, interaction, options, perms) => {

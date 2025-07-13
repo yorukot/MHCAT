@@ -121,7 +121,7 @@ client.on("interactionCreate", async (interaction) => {
                                 extension: 'png'
                             }) ? interaction.user.avatarURL({
                                 extension: 'png'
-                            }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                            }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#FF5809')
                 ],
@@ -135,30 +135,26 @@ client.on("interactionCreate", async (interaction) => {
             const user = member.user
             const canvas_user = createCanvas(128, 128)
             const ctx_user = canvas_user.getContext('2d')
-            var img = new Image();
-            img.src = user.avatarURL({
+            const img = loadImage(user.avatarURL({
                 extension: 'png'
             }) ? user.avatarURL({
                 extension: 'png'
-            }) : "https://cdn.discordapp.com/attachments/991337796960784424/1076068197696016455/yellow-discord-icon-15.png"
-            var imgg = new Image();
-            imgg.src = "https://media.discordapp.net/attachments/991337796960784424/1073294721591550002/fotor_2023-2-10_1_29_20.png"
-            img.onload = function () {
+            }) : "asset/yellow_discord.png")
+            const imgg = await loadImage("asset/mhcat_white.png")
+            img.then(async (img) => {
                 ctx_user.save();
                 roundedImage(ctx_user, 0, 0, 128, 128, 40);
                 ctx_user.clip();
                 ctx_user.drawImage(img, 0, 0, 128, 128);
                 ctx_user.restore();
-                var imggg = new Image();
-                imggg.src = "https://media.discordapp.net/attachments/991337796960784424/1073179338851221504/fotor_2023-2-9_17_51_3.png"
+                const imggg = await loadImage("asset/verify_icon.png")
 
                 const canvas = createCanvas(1000, 707)
                 const ctx = canvas.getContext('2d')
-                var background = new Image();
-                background.src = "https://media.discordapp.net/attachments/991337796960784424/1072889892738179142/fotor_2023-2-8_22_41_9.png";
+                const background = loadImage("asset/background.png")
                 let calebdar = calendar().of(Number(yearrr), Number(monthh) - 1)
 
-                background.onload = function () {
+                background.then((background) => {
                     ctx.drawImage(background, 0, 0);
                     var emptyData = ctx.getImageData(0, 0, 1000, 707);
                     emptyData = gaussBlur(emptyData);
@@ -285,8 +281,8 @@ client.on("interactionCreate", async (interaction) => {
                         return
                     })
 
-                }
-            }
+                })
+            })
         } else if (interaction.customId.includes('my-profile')) {
 
             function errorss(content) {
@@ -310,7 +306,7 @@ client.on("interactionCreate", async (interaction) => {
                                 extension: 'png'
                             }) ? interaction.user.avatarURL({
                                 extension: 'png'
-                            }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                            }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#FF5809')
                 ],
@@ -322,21 +318,20 @@ client.on("interactionCreate", async (interaction) => {
             //頭貼設置
             const canvas_user = createCanvas(128, 128)
             const ctx_user = canvas_user.getContext('2d')
-            const img = new Image();
-            img.src = user.avatarURL({
+            const img = loadImage(user.avatarURL({
                 extension: 'png'
             }) ? user.avatarURL({
                 extension: 'png'
-            }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"
+            }) : "asset/yellow_discord.png")
             //頭貼load
-            img.onload = function () {
+            img.then((img) => {
                 //背景設置
                 const canvas = createCanvas(1500, 750)
                 const ctx = canvas.getContext('2d')
-                var background = new Image();
-                background.src = "https://media.discordapp.net/attachments/991337796960784424/1076067170401919068/user-info.png"
+                
+                const background = loadImage("asset/background_profile.png")
                 //背景圖片load
-                background.onload = function () {
+                background.then((background) => {
                     //背景放上去
                     ctx.drawImage(background, 0, 0);
                     //頭貼圓角
@@ -546,8 +541,8 @@ client.on("interactionCreate", async (interaction) => {
                             })
                         })
                     })
-                }
-            }
+                })
+            })
         } else if (interaction.customId.includes('shardinfoupdate') || interaction.customId.includes('botinfoupdate')) {
             try {
                 if (interaction.customId === 'shardinfoupdate') {
@@ -1156,7 +1151,7 @@ client.on("interactionCreate", async (interaction) => {
                       let localizedDescription = description_localizations?.[interaction.guild.preferredLocale] || description;
                       let dota = {
                         name: `${cmds.length === 0 ? "進行中" : "" + co.cname + " " + localizedName + `:${co.id ? co.id : '964185876559196181'}>`}`,
-                        value: `${co.docs?.[x] ? `[前往文檔](https://docs.mhcat.xyz/${co.docs[x]})` : ''}\`\`\`fix\n${localizedDescription}\`\`\``,
+                        value: `${co.docs?.[x] ? `[前往文檔](https://docsmhcat.yorukot.me/${co.docs[x]})` : ''}\`\`\`fix\n${localizedDescription}\`\`\``,
                         inline: true,
                       };
                       catts.push(dota);
@@ -1202,7 +1197,7 @@ client.on("interactionCreate", async (interaction) => {
                 .setLabel("支援伺服器")
                 .setEmoji("<:customerservice:986268421144592415>"),
                 new ButtonBuilder()
-                .setURL("https://docs.mhcat.xyz")
+                .setURL("https://docsmhcat.yorukot.me")
                 .setEmoji("<:worldwideweb:986268131284627507>")
                 .setStyle(ButtonStyle.Link)
                 .setLabel("官方網站")

@@ -36,7 +36,7 @@ module.exports = {
         description: '要清除資料的使用者!',
         required: true
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:trashbin:986308183674990592>`,
     run: async (client, interaction, options, perms) => {

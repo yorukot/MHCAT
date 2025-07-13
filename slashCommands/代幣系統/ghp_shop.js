@@ -122,7 +122,7 @@ module.exports = {
         description: '查詢所有商品id及商品資訊',
     }],
     UserPerms: '查詢跟購買大家都可用，剩下皆須訊息管理',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/statistics.html',
     emoji: `<:store:1001118704651743372>`,
     docs: [
         'allcommands/%E4%BB%A3%E5%B9%A3%E7%B3%BB%E7%B5%B1/ghp_shop#%E5%A2%9E%E5%8A%A0%E5%95%86%E5%93%81',

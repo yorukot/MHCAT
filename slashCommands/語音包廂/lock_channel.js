@@ -38,7 +38,7 @@ module.exports = {
         description: '設定該包廂密碼，如想不設定密碼，可直接忽略此選項',
         required: false,
     }],
-    //video: 'https://docs.mhcat.xyzz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.mez/commands/announcement.html',
     emoji: `<:mapsandflags:985949507114131587>`,
     run: async (client, interaction, options, perms) => {
         try {

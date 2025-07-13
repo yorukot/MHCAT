@@ -77,7 +77,7 @@ module.exports = {
     name: '簽到',
     cooldown: 60,
     description: '簽到來獲得代幣',
-    video: 'https://docs.mhcat.xyz/docs/snig',
+    video: 'https://docsmhcat.yorukot.me/docs/snig',
     emoji: `<:sign:997374180632825896>`,
     run: async (client, interaction, options, perms) => {
 
@@ -95,7 +95,7 @@ module.exports = {
                         extension: 'png'
                     }) ? interaction.user.avatarURL({
                         extension: 'png'
-                    }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                    }) : "https://i.imgur.com/B91C90T.png"}`
                 })
                 .setColor('#FF5809')
             ]
@@ -252,30 +252,26 @@ module.exports = {
 
             const canvas_user = createCanvas(128, 128)
             const ctx_user = canvas_user.getContext('2d')
-            var img = new Image();
-            img.src = interaction.user.avatarURL({
+            const img = loadImage(interaction.user.avatarURL({
                 extension: 'png'
             }) ? interaction.user.avatarURL({
                 extension: 'png'
-            }) : "https://cdn.discordapp.com/attachments/991337796960784424/1076068197696016455/yellow-discord-icon-15.png"
-            var imgg = new Image();
-            imgg.src = "https://media.discordapp.net/attachments/991337796960784424/1073294721591550002/fotor_2023-2-10_1_29_20.png"
-            img.onload = function () {
+            }) : "asset/yellow_discord.png")
+            const imgg = await loadImage("asset/mhcat_white.png")
+            img.then(async (img) => {
                 ctx_user.save();
                 roundedImage(ctx_user, 0, 0, 128, 128, 40);
                 ctx_user.clip();
                 ctx_user.drawImage(img, 0, 0, 128, 128);
                 ctx_user.restore();
-                var imggg = new Image();
-                imggg.src = "https://media.discordapp.net/attachments/991337796960784424/1073179338851221504/fotor_2023-2-9_17_51_3.png"
+                const imggg = await loadImage("asset/verify_icon.png")
 
                 const canvas = createCanvas(1000, 707)
                 const ctx = canvas.getContext('2d')
-                var background = new Image();
-                background.src = "https://media.discordapp.net/attachments/991337796960784424/1072889892738179142/fotor_2023-2-8_22_41_9.png";
+                const background = loadImage("asset/background.png")
                 let calebdar = calendar().of(Number(moment().utcOffset('+08:00').format('yyyy')), Number(moment().utcOffset('+08:00').month()))
 
-                background.onload = function () {
+                background.then((background) => {
                     ctx.drawImage(background, 0, 0);
                     var emptyData = ctx.getImageData(0, 0, 1000, 707);
                     emptyData = gaussBlur(emptyData);
@@ -403,8 +399,8 @@ module.exports = {
                         return
                     })
 
-                }
-            }
+                })
+            })
         } catch (error) {
             const error_send = require('../../functions/error_send.js')
             error_send(error, interaction)

@@ -50,7 +50,7 @@ module.exports = {
         description: '增加或減少的數量',
         required: true,
     }],
-    video: 'https://docs.mhcat.xyz/docs/coin_increase',
+    video: 'https://docsmhcat.yorukot.meocs/coin_increase',
     emoji: `<:income:997374186794258452>`,
     UserPerms: '訊息管理',
     run: async (client, interaction, options, perms) => {

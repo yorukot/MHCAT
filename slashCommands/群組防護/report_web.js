@@ -19,7 +19,7 @@ module.exports = {
     name: '詐騙網址回報',
     cooldown: 10,
     description: '回報詐騙網站',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/statistics.html',
     emoji: `<:fraudalert:1000408260777611355>`,
     options: [{
         name: '網址',

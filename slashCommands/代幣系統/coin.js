@@ -28,7 +28,7 @@ module.exports = {
         description: '要查詢的使用者',
         required: false,
     }],
-    video: 'https://docs.mhcat.xyz/docs/coin',
+    video: 'https://docsmhcat.yorukot.meocs/coin',
     emoji: `<:money:997374193026994236>`,
     run: async (client, interaction, options, perms) => {
         await interaction.deferReply({

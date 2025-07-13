@@ -161,7 +161,7 @@ module.exports = {
                 const bt = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                    .setURL(`https://mhcat.xyz//guilds/${interaction.guild.id}/work`)
+                    .setURL(`https://mhcat.yorukot.me//guilds/${interaction.guild.id}/work`)
                     .setLabel('點我前往儀錶板設定!')
                     .setEmoji("<a:arrow:986268851786375218>")
                     .setStyle(ButtonStyle.Link),

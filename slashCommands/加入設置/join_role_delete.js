@@ -26,7 +26,7 @@ module.exports = {
         description: '輸入身分組!',
         required: true,
     }],
-    video: 'https://docs.mhcat.xyz/docs/join_role_delete',
+    video: 'https://docsmhcat.yorukot.me/docs/join_role_delete',
     UserPerms: '訊息管理',
     emoji: `<:delete:985944877663678505>`,
     run: async (client, interaction, options, perms) => {

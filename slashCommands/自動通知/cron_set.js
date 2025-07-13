@@ -50,7 +50,7 @@ module.exports = {
         channel_types: [0, 5],
         required: true
     }],
-    //video: 'https://docs.mhcat.xyz/docs/chat_xp_set',
+    //video: 'https://docsmhcat.yorukot.me/docs/chat_xp_set',
     UserPerms: '訊息管理',
     emoji: `<:configuration:984010500608249886>`,
     video: "https://youtu.be/D43zPrZU5Fw",

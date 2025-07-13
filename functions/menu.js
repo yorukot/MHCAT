@@ -53,7 +53,7 @@ const create_mh = (
             .setLabel("支援伺服器")
             .setEmoji("<:customerservice:986268421144592415>"),
             new ButtonBuilder()
-            .setURL("https://mhcat.xyz")
+            .setURL("https://mhcat.yorukot.me")
             .setEmoji("<:worldwideweb:986268131284627507>")
             .setStyle(ButtonStyle.Link)
             .setLabel("官方網站")

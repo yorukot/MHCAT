@@ -3,6 +3,7 @@ const {
     EmbedBuilder,
     WebhookClient
 } = require('discord.js')
+const config = require('../config')
 const {
     Cluster
 } = require('discord-hybrid-sharding')
@@ -22,7 +23,7 @@ client.once('ready', () => {
     })
     client.user.setPresence({
         activities: [{
-            name: `/help | mhcat.xyz`
+            name: `/help | mhcat.yorukot.me`
         }],
         status: 'idle',
         type: "idle"

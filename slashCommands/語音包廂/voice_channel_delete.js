@@ -36,7 +36,7 @@ module.exports = {
         description: '刪除加入某個頻道後會創建新頻道的那個`某個頻道`或是類別裡的所有設定',
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:delete:985944877663678505>`,
     run: async (client, interaction, options, perms) => {

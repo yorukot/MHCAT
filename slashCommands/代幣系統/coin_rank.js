@@ -63,7 +63,7 @@ module.exports = {
     name: '代幣排行榜',
     cooldown: 10,
     description: '查詢代幣的排行榜',
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.meommands/announcement.html',
     emoji: `<:levelup:990254382845157406>`,
     run: async (client, interaction, options, perms) => {
         try {
@@ -86,7 +86,7 @@ module.exports = {
                             extension: 'png'
                         }) ? interaction.user.avatarURL({
                             extension: 'png'
-                        }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                        }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#FF5809')
                 ]
@@ -129,25 +129,23 @@ module.exports = {
                 const number = 0
                 const canvas_user = createCanvas(128, 128)
                 const ctx_user = canvas_user.getContext('2d')
-                const img = new Image();
                 coin.findOne({
                     guild: interaction.guild.id,
                     member: interaction.user.id
                 }, async (err, coin_user_data) => {
-                img.src = interaction.guild.iconURL({
+                const img = loadImage(interaction.guild.iconURL({
                     extension: 'png'
                 }) ? interaction.guild.iconURL({
                     extension: 'png'
-                }) : "https://media.discordapp.net/attachments/991337796960784424/1079056697382948954/2111370.png"
+                }) : "asset/blue_discord.png")
                 //頭貼load
-                img.onload = function () {
+                img.then((img) => {
                     //背景設置
                     const canvas = createCanvas(1000, 500)
                     const ctx = canvas.getContext('2d')
-                    var background = new Image();
-                    background.src = "https://media.discordapp.net/attachments/991337796960784424/1079301430906720347/rank.png"
+                    const background = loadImage("asset/coin_rank_background.png")
                     //背景圖片load
-                    background.onload = function () {
+                    background.then((background) => {
                         const findGreater = (arr, num) => {
                             const res = [];
                             for (let i = 0; i < arr.length; i++) {
@@ -304,8 +302,8 @@ module.exports = {
                             embeds: [],
                             components: get_coin_rank() === '沒有資料' ? [bt100] : [bt100,bt101]
                         });
-                    }
-                }
+                    })
+                })
             })
         })
 

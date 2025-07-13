@@ -44,7 +44,7 @@ module.exports = {
             },
         ],
     }],
-    video: 'https://docs.mhcat.xyz/docs/join_role',
+    video: 'https://docsmhcat.yorukot.meocs/join_role',
     UserPerms: '訊息管理',
     emoji: `<:roleplaying:985945121264635964>`,
     run: async (client, interaction, options, perms) => {

@@ -28,7 +28,7 @@ module.exports = {
         description: '輸入要刪除的自動通知id!',
         required: true
     }],
-    //video: 'https://docs.mhcat.xyz/docs/chat_xp_set',
+    //video: 'https://docsmhcat.yorukot.me/docs/chat_xp_set',
     UserPerms: '訊息管理',
     emoji: `<:trashbin:995991389043163257>`,
     video: "https://youtu.be/D43zPrZU5Fw",

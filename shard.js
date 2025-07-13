@@ -85,11 +85,3 @@ process.on("exit", (code) => {
 });
 process.on("multipleResolves", (type, promise, reason) => {
 });
-
-async function sendHeartbeat() {
-    await fetch("https://betteruptime.com/api/v1/heartbeat/5QG72ywMUo6aqFLoiDrAYb69", {
-      method: "POST",
-    });
-}
-  
-setInterval(sendHeartbeat, 100000);

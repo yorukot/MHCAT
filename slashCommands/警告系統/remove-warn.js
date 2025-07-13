@@ -42,7 +42,7 @@ module.exports = {
         description: '要清除第幾個警告!',
         required: true
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:delete1:986068526387314690>`,
     run: async (client, interaction, options, perms) => {

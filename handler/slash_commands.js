@@ -3,8 +3,11 @@ const fs = require('fs');
 const {
     readdirSync
 } = fs;
+const {
+    token
+} = require('../config.json')
 const { REST, Routes } = require('discord.js');
-const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+const rest = new REST({ version: '10' }).setToken(token);
 client.once('ready', () => {
     setTimeout(() => {
         readdirSync('./slashCommands').forEach(async (dir) => {

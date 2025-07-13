@@ -22,7 +22,7 @@ module.exports = {
     name: '簽到列表',
     cooldown: 10,
     description: '查看今天有誰簽到了',
-    video: 'https://docs.mhcat.xyz/docs/snig',
+    video: 'https://docsmhcat.yorukot.me/docs/snig',
     emoji: `<:sign:997374180632825896>`,
     run: async (client, interaction, options, perms) => {
         await interaction.deferReply();

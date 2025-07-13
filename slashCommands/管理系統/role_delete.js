@@ -29,7 +29,7 @@ module.exports = {
         description: '請輸入要放在訊息下面的表情符號',
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:add:985948803469279303>`,
     run: async (client, interaction, options, perms) => {

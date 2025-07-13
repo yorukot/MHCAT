@@ -29,7 +29,7 @@ module.exports = {
     channel_types: [0, 5],
     required: true,
   }],
-  video: "https://docs.mhcat.xyz/docs/join_message",
+  video: "https://docsmhcat.yorukot.meocs/join_message",
   UserPerms: "訊息管理",
   emoji: `<:comments:985944111725019246>`,
 
@@ -47,7 +47,7 @@ module.exports = {
       const bt = new ActionRowBuilder()
       .addComponents(
           new ButtonBuilder()
-          .setURL(`https://mhcat.xyz//guilds/${interaction.guild.id}/welcome`)
+          .setURL(`https://mhcat.yorukot.meguilds/${interaction.guild.id}/welcome`)
           .setLabel('點我前往儀錶板設定!')
           .setEmoji("<a:arrow:986268851786375218>")
           .setStyle(ButtonStyle.Link),

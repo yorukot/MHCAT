@@ -31,7 +31,7 @@ module.exports = {
         description: '警告他的原因',
         required: true
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.meommands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:warning:985590881698590730>`,
     run: async (client, interaction, options, perms) => {

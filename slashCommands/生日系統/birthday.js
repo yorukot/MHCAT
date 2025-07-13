@@ -180,7 +180,7 @@ module.exports = {
         "allcommands/%E7%94%9F%E6%97%A5%E7%B3%BB%E7%B5%B1/birthday_date_add",
         "allcommands/%E7%94%9F%E6%97%A5%E7%B3%BB%E7%B5%B1/allow_admin_set_birthday"
     ],
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/statistics.html',
     emoji: `<:working:1048617967799242772>`,
     run: async (client, interaction, options, perms) => {
         await interaction.deferReply();

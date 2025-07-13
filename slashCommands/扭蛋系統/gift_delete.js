@@ -25,7 +25,7 @@ module.exports = {
         description: '輸入這個獎品叫甚麼，以及簡單概述',
         required: true,
     }],
-    video: 'https://docs.mhcat.xyz.xyz/docs/prize_removal',
+    video: 'https://docsmhcat.yorukot.me.xyz/docs/prize_removal',
     emoji: `<:trashbin:995991389043163257>`,
     UserPerms: '訊息管理',
     run: async (client, interaction, options, perms) => {

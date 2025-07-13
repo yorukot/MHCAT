@@ -115,25 +115,23 @@ client.on("interactionCreate", async (interaction) => {
 
                 const canvas_user = createCanvas(128, 128)
                 const ctx_user = canvas_user.getContext('2d')
-                const img = new Image();
                 text_xp.findOne({
                     guild: interaction.guild.id,
                     member: user.id
                 }, async (err, coin_user_data) => {
-                    img.src = interaction.guild.iconURL({
+                    const img = loadImage(interaction.guild.iconURL({
                         extension: 'png'
                     }) ? interaction.guild.iconURL({
                         extension: 'png'
-                    }) : "https://media.discordapp.net/attachments/991337796960784424/1079056697382948954/2111370.png"
+                    }) : "asset/blue_discord.png")
                     //頭貼load
-                    img.onload = function () {
+                    img.then((img) => {
                         //背景設置
                         const canvas = createCanvas(1000, 500)
                         const ctx = canvas.getContext('2d')
-                        var background = new Image();
-                        background.src = "https://media.discordapp.net/attachments/991337796960784424/1084440201386000474/text_rank.png"
+                        const background = loadImage("asset/rank_background.png")
                         //背景圖片load
-                        background.onload = function () {
+                        background.then((background) => {
                             const findGreater = (arr, num) => {
                                 const res = [];
                                 for (let i = 0; i < arr.length; i++) {
@@ -284,8 +282,8 @@ client.on("interactionCreate", async (interaction) => {
                                 embeds: [],
                                 components: get_coin_rank() === '沒有資料' ? [bt100] : [bt100, bt101]
                             });
-                        }
-                    }
+                        })
+                    })
                 })
 
             })
@@ -339,25 +337,23 @@ client.on("interactionCreate", async (interaction) => {
 
                 const canvas_user = createCanvas(128, 128)
                 const ctx_user = canvas_user.getContext('2d')
-                const img = new Image();
                 voice_xp.findOne({
                     guild: interaction.guild.id,
                     member: user.id
                 }, async (err, coin_user_data) => {
-                    img.src = interaction.guild.iconURL({
+                    const img = loadImage(interaction.guild.iconURL({
                         extension: 'png'
                     }) ? interaction.guild.iconURL({
                         extension: 'png'
-                    }) : "https://media.discordapp.net/attachments/991337796960784424/1079056697382948954/2111370.png"
+                    }) : "asset/blue_discord.png")
                     //頭貼load
-                    img.onload = function () {
+                    img.then((img) => {
                         //背景設置
                         const canvas = createCanvas(1000, 500)
                         const ctx = canvas.getContext('2d')
-                        var background = new Image();
-                        background.src = "https://media.discordapp.net/attachments/991337796960784424/1084440201386000474/text_rank.png"
+                        const background = loadImage("asset/rank_background.png")
                         //背景圖片load
-                        background.onload = function () {
+                        background.then((background) => {
                             const findGreater = (arr, num) => {
                                 const res = [];
                                 for (let i = 0; i < arr.length; i++) {
@@ -508,8 +504,8 @@ client.on("interactionCreate", async (interaction) => {
                                 embeds: [],
                                 components: get_coin_rank() === '沒有資料' ? [bt100] : [bt100, bt101]
                             });
-                        }
-                    }
+                        })
+                    })
                 })
 
             })
@@ -561,20 +557,19 @@ client.on("interactionCreate", async (interaction) => {
                     guild: interaction.guild.id,
                     member: user.id
                 }, async (err, coin_user_data) => {
-                img.src = interaction.guild.iconURL({
+                const img = loadImage(interaction.guild.iconURL({
                     extension: 'png'
                 }) ? interaction.guild.iconURL({
                     extension: 'png'
-                }) : "https://media.discordapp.net/attachments/991337796960784424/1079056697382948954/2111370.png"
+                }) : "asset/blue_discord.png")
                 //頭貼load
-                img.onload = function () {
+                img.then((img) => {
                     //背景設置
                     const canvas = createCanvas(1000, 500)
                     const ctx = canvas.getContext('2d')
-                    var background = new Image();
-                    background.src = "https://media.discordapp.net/attachments/991337796960784424/1079301430906720347/rank.png"
+                    const background = loadImage("asset/coin_rank_background.png")
                     //背景圖片load
-                    background.onload = function () {
+                    background.then((background) => {
                         const findGreater = (arr, num) => {
                             const res = [];
                             for (let i = 0; i < arr.length; i++) {
@@ -731,8 +726,8 @@ client.on("interactionCreate", async (interaction) => {
                             embeds: [],
                             components: get_coin_rank() === '沒有資料' ? [bt100] : [bt100,bt101]
                         });
-                    }
-                }
+                    })
+                })
             })
         })
         }

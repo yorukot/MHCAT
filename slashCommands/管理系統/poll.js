@@ -36,7 +36,7 @@ module.exports = {
         description: '輸入回答的選項，請用^將各個選項分開 ex:電腦^手機^兩個都要^!',
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:logfile:985948561625710663>`,
     run: async (client, interaction, options, perms) => {

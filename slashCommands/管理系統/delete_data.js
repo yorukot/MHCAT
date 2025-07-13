@@ -20,7 +20,7 @@ module.exports = {
     name: '刪除資料',
     cooldown: 10,
     description: '刪除之前設置過的資料',
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:logfile:985948561625710663>`,
     run: async (client, interaction, options, perms) => {

@@ -20,7 +20,7 @@ module.exports = {
     cooldown: 10,
     description: '刪除統計消息',
     UserPerms: '管理訊息',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/statistics.html',
     emoji: `<:delete1:986068526387314690>`,
     UserPerms: '訊息管理',
     run: async (client, interaction, options, perms) => {

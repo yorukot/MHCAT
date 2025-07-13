@@ -23,7 +23,7 @@ const {
 module.exports = {
     name: '公告發送',
     description: '發送公告訊息',
-    video: 'https://docs.mhcat.xyz/docs/ann',
+    video: 'https://docsmhcat.yorukot.me/docs/ann',
     UserPerms: '訊息管理',
     emoji: `<:megaphone:985943890148327454>`,
     cooldown: 10,

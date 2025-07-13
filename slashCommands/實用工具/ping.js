@@ -18,7 +18,7 @@ module.exports = {
     name: 'ping',
     cooldown: 0,
     description: '查看我的ping',
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.meommands/announcement.html',
     emoji: `<:icons_goodping:1084881470075703367>`,
     run: async (client, interaction, options, perms) => {
         try {

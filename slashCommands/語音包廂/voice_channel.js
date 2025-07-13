@@ -54,7 +54,7 @@ module.exports = {
         description: '設定頻道人數上限(如果不填，即為無上限)',
         required: false,
     }, ],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:mapsandflags:985949507114131587>`,
     run: async (client, interaction, options, perms) => {

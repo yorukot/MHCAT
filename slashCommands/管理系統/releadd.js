@@ -31,7 +31,7 @@ module.exports = {
         description: '輸入身分組!',
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:add:985948803469279303>`,
     run: async (client, interaction, options, perms) => {

@@ -22,7 +22,7 @@ module.exports = {
     name: '自動通知列表',
     cooldown: 10,
     description: '查看所有的自動通知列表',
-    //video: 'https://docs.mhcat.xyz/docs/chat_xp_set',
+    //video: 'https://docsmhcat.yorukot.me/docs/chat_xp_set',
     UserPerms: '訊息管理',
     emoji: `<:list:992002476360343602>`,
     video: "https://youtu.be/D43zPrZU5Fw",

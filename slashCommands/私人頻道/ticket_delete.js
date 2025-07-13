@@ -21,7 +21,7 @@ module.exports = {
     name: '私人頻道刪除',
     cooldown: 10,
     description: '刪除之前設置的私人頻道',
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:delete:985944877663678505>`,
     run: async (client, interaction, options, perms) => {

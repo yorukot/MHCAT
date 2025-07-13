@@ -19,7 +19,7 @@ module.exports = {
     name: '統計系統查詢',
     cooldown: 10,
     description: '查詢統計消息',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/statistics.html',
     emoji: `<:searching:986107902777491497>`,
      run: async (client, interaction, options, perms) => {
         try{ 

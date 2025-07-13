@@ -51,7 +51,7 @@ module.exports = {
 	    },
         required: true,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:logfile:985948561625710663>`,
     run: async (client, interaction, options, perms) => {

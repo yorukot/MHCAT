@@ -35,7 +35,7 @@ module.exports = {
         description: '選擇是否要刪除某個特定的使用者的訊息(如填選這項，第一項代表的將是檢測訊息數量)',
         required: false,
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理(刪除超過200則需要有權限)',
     emoji: `<:delete:985944877663678505>`,
     run: async (client, interaction, options, perms) => {

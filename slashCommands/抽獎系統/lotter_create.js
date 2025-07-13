@@ -68,15 +68,24 @@ module.exports = {
         description: '設定最多只能有幾位參加',
         required: false,
     }],
-    video: 'https://docs.mhcat.xyz/docs/lotter',
+    video: 'https://docsmhcat.yorukot.meocs/lotter',
     UserPerms: '訊息管理',
     emoji: `<:lottery:985946439253381200>`,
     docs: [
         'allcommands/%E6%8A%BD%E7%8D%8E%E7%B3%BB%E7%B5%B1/lotter',
     ],
     run: async (client, interaction, options, perms) => {
+        
         await interaction.deferReply({ephemeral: true});
         try {
+            interaction.editReply({
+                embeds: [new EmbedBuilder()
+                .setTitle("<a:green_tick:994529015652163614> | 這個指令暫時無法使用造成困擾非常抱歉!")
+                .setColor(client.color.greate)
+                ],
+                ephemeral: true
+            })
+        return;
         function errors(content){const embed = new EmbedBuilder().setTitle(`<a:Discord_AnimatedNo:1015989839809757295> | ${content}`).setColor("Red");interaction.editReply({embeds: [embed],ephemeral: true})}
         if(!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages))return errors_edit(interaction, `你需要有\`${perms}\`才能使用此指令`, 'allcommands/%E6%8A%BD%E7%8D%8E%E7%B3%BB%E7%B5%B1/lotter')
         const date = `${interaction.options.getString("截止日期")}`

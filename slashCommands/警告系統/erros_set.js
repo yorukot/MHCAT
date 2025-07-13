@@ -34,7 +34,7 @@ module.exports = {
         description: '被警告幾次後要執行這個動作!',
         required: true
     }],
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:configuration:984010500608249886>`,
     run: async (client, interaction, options, perms) => {

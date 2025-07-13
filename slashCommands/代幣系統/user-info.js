@@ -94,7 +94,7 @@ module.exports = {
         },
         required: false,
     }],
-    video: 'https://docs.mhcat.xyz/docs/snig',
+    video: 'https://docsmhcat.yorukot.me/docs/snig',
     emoji: `<:sign:997374180632825896>`,
     run: async (client, interaction, options, perms) => {
         try {
@@ -118,7 +118,7 @@ module.exports = {
                             extension: 'png'
                         }) ? interaction.user.avatarURL({
                             extension: 'png'
-                        }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"}`
+                        }) : "https://i.imgur.com/B91C90T.png"}`
                     })
                     .setColor('#FF5809')
                 ]
@@ -128,21 +128,19 @@ module.exports = {
             //頭貼設置
             const canvas_user = createCanvas(128, 128)
             const ctx_user = canvas_user.getContext('2d')
-            const img = new Image();
-            img.src = user.avatarURL({
+            const img = loadImage(user.avatarURL({
                 extension: 'png'
             }) ? user.avatarURL({
                 extension: 'png'
-            }) : "https://media.discordapp.net/attachments/991337796960784424/1076068374284599307/yellow-discord-icon-15.jpg?width=699&height=701"
+            }) : "asset/yellow_discord.png")
             //頭貼load
-            img.onload = function () {
+            img.then((img) => {
                 //背景設置
                 const canvas = createCanvas(1500, 750)
                 const ctx = canvas.getContext('2d')
-                var background = new Image();
-                background.src = "https://media.discordapp.net/attachments/991337796960784424/1076067170401919068/user-info.png"
+                const backgroundPromise = loadImage("asset/background_profile.png")
                 //背景圖片load
-                background.onload = function () {
+                backgroundPromise.then((background) => {
                     //背景放上去
                     ctx.drawImage(background, 0, 0);
                     //頭貼圓角
@@ -352,8 +350,8 @@ module.exports = {
                             })
                         })
                     })
-                }
-            }
+                })
+            })
         } catch (error) {
             const error_send = require('../../functions/error_send.js')
             error_send(error, interaction)

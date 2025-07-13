@@ -31,7 +31,7 @@ module.exports = {
         description: '輸入名稱，{name}代表原本的名稱ex:平名 | {name} 就會變成 平名 | 夜貓',
         required: false,
     }],
-    video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     UserPerms: '訊息管理',
     emoji: `<:configuration:984010500608249886>`,
     run: async (client, interaction, options, perms) => {

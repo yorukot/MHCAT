@@ -65,7 +65,7 @@ module.exports = {
                 coin.find({
                     guild: interaction.guild.id,
                 }, async (err, data) => {
-                    if (!data === []) {
+                    if (!data.length === 0) {
                         errors("這伺服器沒有任何的代幣喔!")
                     } else {
                         for (let index = 0; index < data.length; index++) {

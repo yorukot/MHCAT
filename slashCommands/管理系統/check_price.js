@@ -20,7 +20,7 @@ module.exports = {
     name: '查看餘額',
     cooldown: 10,
     description: '查看剩餘餘額',
-    //video: 'https://docs.mhcat.xyz/commands/announcement.html',
+    //video: 'https://docsmhcat.yorukot.me/commands/announcement.html',
     emoji: `<:logfile:985948561625710663>`,
     run: async (client, interaction, options, perms) => {
         await interaction.deferReply({ephemeral: true}).catch(e => {});

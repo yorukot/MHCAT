@@ -34,7 +34,7 @@ module.exports = {
     cooldown: 10,
     description: '設定是否開啟防詐騙網址功能(輸入這個指令就會更改)',
     UserPerms: '訊息管理',
-    //video: 'https://docs.mhcat.xyz/commands/statistics.html',
+    //video: 'https://docsmhcat.yorukot.meommands/statistics.html',
     emoji: `<:fraudalert:1000408260777611355>`,
     run: async (client, interaction, options, perms) => {
         try {

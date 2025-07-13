@@ -24,7 +24,7 @@ module.exports = {
     name: '自動聊天頻道刪除',
     cooldown: 10,
     description: '刪除自動聊天頻道要在哪裡發送',
-    video: 'https://docs.mhcat.xyz/docs/chat_xp_set',
+    video: 'https://docsmhcat.yorukot.me/docs/chat_xp_set',
     UserPerms: '訊息管理',
     emoji: `<:delete:985944877663678505>`,
     run: async (client, interaction, options, perms) => {
