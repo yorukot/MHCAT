@@ -4,7 +4,7 @@ const {
     ButtonStyle,
     ApplicationCommandOptionType,
     ActionRowBuilder,
-    SelectMenuBuilder,
+    StringSelectMenuBuilder,
     ButtonBuilder,
     EmbedBuilder,
     Collector,
@@ -16,7 +16,7 @@ const {
 } = require('discord.js');
 const os = require("os");
 const process = require('process');
-const { ClusterClient, getInfo } = require('discord-hybrid-sharding');
+const { ShardingManager } = require('discord.js');
 
 const language_flag = {
     "id": "🇮🇩",
@@ -152,92 +152,103 @@ module.exports = {
                 })
             }
             if (interaction.options.getSubcommand() === "bot") {
-                const data1 = client.cluster.broadcastEval('this.receiveBotInfo()');
-                const a = []
-                let guildss = 0
-                let membersss = 0
-                let result = null
-                data1.then(function (result1) {
-                    for (let i = 0; i < result1.length; i++) {
-                        result = result1
+                try {
+                    // Use Discord.js native sharding with function instead of string
+                    const data1 = await client.shard.broadcastEval(client => client.receiveBotInfo());
+                    const a = []
+                    let guildss = 0
+                    let membersss = 0
+                    
+                    for (let i = 0; i < data1.length; i++) {
                         const {
-                            cluster,
-                            shards,
+                            shardId,
                             guild,
                             members,
                             ram,
                             rssRam,
                             ping,
                             uptime
-                        } = result1[i]
+                        } = data1[i]
                         const test = {
-                            name: `<:server:986064124209418251> 分片ID: ${shards}`,
+                            name: `<:server:986064124209418251> 分片ID: ${shardId}`,
                             value: `\`\`\`fix\n公會數量: ${guild}\n使用者數量: ${members}\n記憶體: ${ram}\\${rssRam} mb\n上線時間:${uptime}\n延遲: ${ping}\`\`\``,
                             inline: true
                         }
                         a.push(test)
-                        guildss = guild + guildss
-                        membersss = members + membersss
+                        guildss += guild
+                        membersss += members
                     }
-                })
-                const totalRam = Math.round(os.totalmem() / 1024 / 1024);
-                const usedRam = Math.round((os.totalmem() - os.freemem()) / 1024 / 1024);
-                const osaa = require("os-utils");
+                    
+                    const totalRam = Math.round(os.totalmem() / 1024 / 1024);
+                    const usedRam = Math.round((os.totalmem() - os.freemem()) / 1024 / 1024);
+                    const osaa = require("os-utils");
 
-                const row = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                        .setEmoji("<:update:1020532095212335235>")
-                        .setCustomId('botinfoupdate')
-                        .setLabel('更新')
-                        .setStyle(ButtonStyle.Success)
-                    );
-                osaa.cpuUsage(function (v) {
+                    const row = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                            .setEmoji("<:update:1020532095212335235>")
+                            .setCustomId('botinfoupdate')
+                            .setLabel('更新')
+                            .setStyle(ButtonStyle.Success)
+                        );
+                    
+                    osaa.cpuUsage(function (v) {
+                        const embed = new EmbedBuilder()
+                            .setTitle("<a:mhcat:996759164875440219> MHCAT目前系統使用量:")
+                            .addFields([{
+                                    name: "<:cpu:986062422383161424> CPU型號:\n",
+                                    value: `\`${os.cpus().map((i) => `${i.model}`)[0]}\``,
+                                    inline: false
+                                },
+                                {
+                                    name: "<:cpu:987630931932229632> CPU使用量:\n",
+                                    value: `\`${(v * 100).toFixed(2)}\`**%**`,
+                                    inline: true
+                                },
+                                {
+                                    name: "<:vagueness:999527612634374184> 分片數量:\n",
+                                    value: `\`${client.shard ? client.shard.count : 1}\` **個**`,
+                                    inline: true
+                                },
+                                {
+                                    name: "<:rammemory:986062763598155797> RAM使用量:",
+                                    value: `\`${usedRam}\\${totalRam}\` **MB**\`(${((usedRam / totalRam) * 100).toFixed(2)}%)\``,
+                                    inline: true
+                                },
+                                {
+                                    name: "<:chronometer:986065703369080884> 開機時間:",
+                                    value: `**<t:${Math.round((Date.now() / 1000) - process.uptime())}:R>**`,
+                                    inline: true
+                                },
+                                {
+                                    name: "<:server:986064124209418251> 總伺服器:",
+                                    value: `\`${guildss}\``,
+                                    inline: true
+                                },
+                                {
+                                    name: `<:user:986064391139115028> 總使用者:`,
+                                    value: `\`${membersss}\``,
+                                    inline: true
+                                },
+                            ])
+                            .setTimestamp()
+                            .setColor('Random')
+                        interaction.followUp({
+                            embeds: [embed],
+                            components: [row]
+                        })
+                    })
+                } catch (error) {
+                    console.error('Error getting bot info:', error);
                     const embed = new EmbedBuilder()
-                        .setTitle("<a:mhcat:996759164875440219> MHCAT目前系統使用量:")
-                        .addFields([{
-                                name: "<:cpu:986062422383161424> CPU型號:\n",
-                                value: `\`${os.cpus().map((i) => `${i.model}`)[0]}\``,
-                                inline: false
-                            },
-                            {
-                                name: "<:cpu:987630931932229632> CPU使用量:\n",
-                                value: `\`${(v * 100).toFixed(2)}\`**%**`,
-                                inline: true
-                            },
-                            {
-                                name: "<:vagueness:999527612634374184> 集群數量:\n",
-                                value: `\`${getInfo().TOTAL_SHARDS}\` **個**`,
-                                inline: true
-                            },
-                            {
-                                name: "<:rammemory:986062763598155797> RAM使用量:",
-                                value: `\`${usedRam}\\${totalRam}\` **MB**\`(${((usedRam / totalRam) * 100).toFixed(2)}%)\``,
-                                inline: true
-                            },
-                            {
-                                name: "<:chronometer:986065703369080884> 開機時間:",
-                                value: `**<t:${Math.round((Date.now() / 1000) - process.uptime())}:R>**`,
-                                inline: true
-                            },
-                            {
-                                name: "<:server:986064124209418251> 總伺服器:",
-                                value: `\`${guildss}\``,
-                                inline: true
-                            },
-                            {
-                                name: `<:user:986064391139115028> 總使用者:`,
-                                value: `\`${membersss}\``,
-                                inline: true
-                            },
-                        ])
-                        .setTimestamp()
-                        .setColor('Random')
+                        .setTitle("<a:Discord_AnimatedNo:1015989839809757295> | 錯誤")
+                        .setDescription("無法獲取機器人資訊，請稍後再試。")
+                        .setColor("Red");
                     interaction.followUp({
                         embeds: [embed],
-                        components: [row]
-                    })
-                })
+                        ephemeral: true
+                    });
+                }
             } else if (interaction.options.getSubcommand() === "shard") {
                 const row = new ActionRowBuilder()
                     .addComponents(

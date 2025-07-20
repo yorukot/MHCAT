@@ -66,7 +66,7 @@ setTimeout(() => {
     })
 }, 60 * 1500);
 
-if (client.cluster.id === 0) {
+if (client.shard && client.shard.ids[0] === 0) {
     cron_set.find({
     }, async (err, data) => {
         if (!data) return;

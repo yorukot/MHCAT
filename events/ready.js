@@ -4,19 +4,17 @@ const {
     WebhookClient
 } = require('discord.js')
 const config = require('../config')
-const {
-    Cluster
-} = require('discord-hybrid-sharding')
+
 const readywebhook = new WebhookClient({
     url: process.env.READY_WEBHOOK
 })
 client.once('ready', () => {
     const chalk = require('chalk')
     console.log(chalk.hex('#00FFFF').bold('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓'))
-    console.log(chalk.hex('#00FFFF').bold(`┃           ${client.cluster.id}機器人成功上線            ┃`))
+    console.log(chalk.hex('#00FFFF').bold(`┃           分片${client.shard ? client.shard.ids[0] : 0}機器人成功上線            ┃`))
     console.log(chalk.hex('#00FFFF').bold('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'))
     let embed = new EmbedBuilder()
-        .setTitle(`**${client.cluster.id} | ${client.user.username}**已就緒`)
+        .setTitle(`**分片${client.shard ? client.shard.ids[0] : 0} | ${client.user.username}**已就緒`)
         .setColor("Green")
     if (client.user.id !== "984485913201635358") readywebhook.send({
         embeds: [embed]

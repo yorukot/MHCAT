@@ -52,7 +52,7 @@ const {
     ButtonStyle,
     ApplicationCommandOptionType,
     ActionRowBuilder,
-    SelectMenuBuilder,
+    StringSelectMenuBuilder,
     ButtonBuilder,
     EmbedBuilder,
     Collector,
@@ -67,10 +67,7 @@ const {
     ChartConfiguration,
 } = require("chartjs-node-canvas");
 const system = require('../models/system.js')
-const {
-    ClusterClient,
-    getInfo
-} = require('discord-hybrid-sharding');
+
 
 const canvas = new ChartJSNodeCanvas({
     type: 'jpg',
@@ -546,26 +543,14 @@ client.on("interactionCreate", async (interaction) => {
         } else if (interaction.customId.includes('shardinfoupdate') || interaction.customId.includes('botinfoupdate')) {
             try {
                 if (interaction.customId === 'shardinfoupdate') {
-                    const data = client.cluster.broadcastEval('this.receiveBotInfo()');
+                    const botInfo = await client.receiveBotInfo();
                     const a = []
-                    data.then(function (result) {
-                        for (let i = 0; i < result.length; i++) {
-                            const {
-                                shards,
-                                guild,
-                                members,
-                                ram,
-                                rssRam,
-                                ping,
-                                uptime
-                            } = result[i]
-                            const test = {
-                                name: `<:server:986064124209418251> 分片ID: ${shards}`,
-                                value: `\`\`\`fix\n公會數量: ${guild}\n使用者數量: ${members}\n記憶體: ${ram}\\${rssRam} mb\n上線時間:${uptime}\n延遲: ${ping}\`\`\``,
-                                inline: true
-                            }
-                            a.push(test)
-                        }
+                    const test = {
+                        name: `<:server:986064124209418251> 分片ID: ${botInfo.shardId}`,
+                        value: `\`\`\`fix\n公會數量: ${botInfo.guild}\n使用者數量: ${botInfo.members}\n記憶體: ${botInfo.ram}\\${botInfo.rssRam} mb\n上線時間:${botInfo.uptime}\n延遲: ${botInfo.ping}\`\`\``,
+                        inline: true
+                    }
+                    a.push(test)
                         const row = new ActionRowBuilder()
                             .addComponents(
                                 new ButtonBuilder()
@@ -584,34 +569,14 @@ client.on("interactionCreate", async (interaction) => {
                             ],
                             components: [row]
                         })
-
-                    })
                 } else {
                     await interaction.deferReply({
                         ephemeral: true
                     });
-                    const data1 = client.cluster.broadcastEval('this.receiveBotInfo()');
+                    const botInfo = await client.receiveBotInfo();
                     const a = []
-                    let guildss = 0
-                    let membersss = 0
-                    let result = null
-                    data1.then(function (result1) {
-                        for (let i = 0; i < result1.length; i++) {
-                            result = result1
-                            const {
-                                cluster,
-                                shards,
-                                guild,
-                                members,
-                                ram,
-                                rssRam,
-                                ping,
-                                uptime
-                            } = result1[i]
-                            guildss = guild + guildss
-                            membersss = members + membersss
-                        }
-                    })
+                    let guildss = botInfo.guild
+                    let membersss = botInfo.members
                     const totalRam = Math.round(os.totalmem() / 1024 / 1024);
                     const usedRam = Math.round((os.totalmem() - os.freemem()) / 1024 / 1024);
                     const osaa = require("os-utils");
@@ -639,7 +604,7 @@ client.on("interactionCreate", async (interaction) => {
                                 },
                                 {
                                     name: "<:vagueness:999527612634374184> 集群數量:\n",
-                                    value: `\`${getInfo().TOTAL_SHARDS}\` **個**`,
+                                    value: `\`${client.shard ? client.shard.count : 1}\` **個**`,
                                     inline: true
                                 },
                                 {

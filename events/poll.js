@@ -349,7 +349,7 @@ client.on("interactionCreate", async (interaction) => {
             } else {
                 return
             }
-        } else if (interaction.isSelectMenu()) {
+        } else if (interaction.isStringSelectMenu()) {
             if (interaction.customId === 'poll_menu') {
 
 

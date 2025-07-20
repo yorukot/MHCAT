@@ -245,7 +245,7 @@ const job = new CronJob(
 //       }
 //     );
 
-    if (client.cluster.id === 0) {
+    if (client.shard && client.shard.ids[0] === 0) {
       work_user.find(
         {
           state: {
