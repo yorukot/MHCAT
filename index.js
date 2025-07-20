@@ -72,22 +72,53 @@ const mongooseOptions = {
     maxPoolSize: 10, // Maintain up to 10 socket connections
     serverSelectionTimeoutMS: 30000, // Keep trying to send operations for 30 seconds
     socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-    bufferMaxEntries: 0, // Disable mongoose buffering
-    bufferCommands: false, // Disable mongoose buffering
     heartbeatFrequencyMS: 10000, // Every 10 seconds
     maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
     retryWrites: true,
     retryReads: true
 };
 
-mongoose.connect(process.env.MONGOOSE_CONNECTION_STRING, mongooseOptions).then(test => {
+// Set Mongoose-specific buffer options
+mongoose.set('bufferCommands', false);
+
+// Function to initialize the bot after database connection
+async function initializeBot() {
+    client.commands = new Collection()
+    client.config = require('./config.json')
+    client.prefix = client.config.prefix
+    client.aliases = new Collection()
+    client.slash_commands = new Collection();
+    client.color = color
+    client.emoji = emoji
+
+    // Load handlers with error handling
+    try {
+        require('./handler/slash_commands');
+        require('./handler')(client);
+        require('./handler/channel_status');
+        require('./handler/gift');
+        require('./handler/cron');
+    } catch (error) {
+        console.error('Error loading handlers:', error);
+        throw error;
+    }
+
+    // Start login process
+    await loginWithRetry();
+}
+
+mongoose.connect(process.env.MONGOOSE_CONNECTION_STRING, mongooseOptions).then(async (test) => {
     const chalk = require('chalk')
     console.log(chalk.hex('#28FF28').bold('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓'))
     console.log(chalk.hex('#28FF28').bold('┃          成功連線至資料庫            ┃'))
     console.log(chalk.hex('#28FF28').bold('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'))
+    
+    // Initialize bot after successful database connection
+    await initializeBot();
 }).catch(err => {
     console.error('MongoDB connection error:', err);
-    // Don't exit immediately, let the process handle it
+    console.error('Unable to connect to database. Bot will not start.');
+    process.exit(1);
 });
 
 // Add MongoDB connection event handlers
@@ -110,28 +141,10 @@ process.on('SIGINT', async () => {
     process.exit(0);
 });
 
-client.commands = new Collection()
-client.config = require('./config.json')
-client.prefix = client.config.prefix
-client.aliases = new Collection()
-client.slash_commands = new Collection();
-client.color = color
-client.emoji = emoji
-
-// Load handlers with error handling
-try {
-    require('./handler/slash_commands');
-    require('./handler')(client);
-    require('./handler/channel_status');
-    require('./handler/gift');
-    require('./handler/cron');
-} catch (error) {
-    console.error('Error loading handlers:', error);
-}
-
 const chalk = require('chalk');
 const end_start = chalk.hex('#4DFFFF');
 
+// Setup message handler
 client.on('messageCreate', async (message) => {
     if ((message.author && admin.includes(message.author.id) && message.content === "MHCAT restart now") || (message.author?.id === "1085973338238754848" && message.content === "請MHCAT開始執行重啟任務!")) {
         // Use Discord.js native shard restart
@@ -142,6 +155,60 @@ client.on('messageCreate', async (message) => {
     }
 })
 
+// Setup bot info function
+client.receiveBotInfo = async () => {
+    function format(seconds) {
+        function pad(s) {
+            return (s < 10 ? '0' : '') + s;
+        }
+        var hours = Math.floor(seconds / (60 * 60));
+        var minutes = Math.floor(seconds % (60 * 60) / 60);
+        var seconds = Math.floor(seconds % 60);
+        return pad(hours) + 'h' + pad(minutes) + 'm' + pad(seconds) + "s";
+    }
+    
+    // Use Discord.js native shard info
+    const shardId = client.shard ? client.shard.ids[0] : 0;
+    const guild = client.guilds.cache.size;
+    const members = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
+    const ram = (process.memoryUsage().heapTotal / 1024 / 1024).toFixed(0);
+    const rssRam = (process.memoryUsage().rss / 1024 / 1024).toFixed(0);
+    const ping = client.ws.ping;
+    const uptime = format(process.uptime())
+    
+    return {
+        shardId,
+        guild,
+        members,
+        ram,
+        rssRam,
+        ping,
+        uptime
+    }
+}
+
+// Login function with retry mechanism for VPS
+let loginAttempts = 0;
+const maxLoginAttempts = 3;
+
+async function loginWithRetry() {
+    try {
+        await client.login(process.env.TOKEN);
+    } catch (error) {
+        loginAttempts++;
+        console.error(`Login attempt ${loginAttempts} failed:`, error);
+        
+        if (loginAttempts < maxLoginAttempts) {
+            console.log(`Retrying login in 5 seconds... (attempt ${loginAttempts + 1}/${maxLoginAttempts})`);
+            setTimeout(loginWithRetry, 5000);
+        } else {
+            console.error('Max login attempts reached. Exiting...');
+            process.exit(1);
+        }
+    }
+}
+
+// Global error handlers
 process.on("unhandledRejection", (reason, p) => {
     console.log(moment().utcOffset("+08:00").format('YYYYMMDDHHmm'))
     console.log(end_start("\n[🚩 崩潰通知] 未處理的拒絕:"));
@@ -178,57 +245,3 @@ process.on("exit", (code) => {
     console.log(code)
     console.log(end_start("=== 退出 ===\n"));
 });
-
-client.receiveBotInfo = async () => {
-    function format(seconds) {
-        function pad(s) {
-            return (s < 10 ? '0' : '') + s;
-        }
-        var hours = Math.floor(seconds / (60 * 60));
-        var minutes = Math.floor(seconds % (60 * 60) / 60);
-        var seconds = Math.floor(seconds % 60);
-        return pad(hours) + 'h' + pad(minutes) + 'm' + pad(seconds) + "s";
-    }
-    
-    // Use Discord.js native shard info
-    const shardId = client.shard ? client.shard.ids[0] : 0;
-    const guild = client.guilds.cache.size;
-    const members = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)
-    const ram = (process.memoryUsage().heapTotal / 1024 / 1024).toFixed(0);
-    const rssRam = (process.memoryUsage().rss / 1024 / 1024).toFixed(0);
-    const ping = client.ws.ping;
-    const uptime = format(process.uptime())
-    
-    return {
-        shardId,
-        guild,
-        members,
-        ram,
-        rssRam,
-        ping,
-        uptime
-    }
-}
-
-// Add login with retry mechanism for VPS
-let loginAttempts = 0;
-const maxLoginAttempts = 3;
-
-async function loginWithRetry() {
-    try {
-        await client.login(process.env.TOKEN);
-    } catch (error) {
-        loginAttempts++;
-        console.error(`Login attempt ${loginAttempts} failed:`, error);
-        
-        if (loginAttempts < maxLoginAttempts) {
-            console.log(`Retrying login in 5 seconds... (attempt ${loginAttempts + 1}/${maxLoginAttempts})`);
-            setTimeout(loginWithRetry, 5000);
-        } else {
-            console.error('Max login attempts reached. Exiting...');
-            process.exit(1);
-        }
-    }
-}
-
-loginWithRetry();

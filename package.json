@@ -5,7 +5,12 @@
     "build": "pm2 restart mhcat",
     "bigupdate": "npm version major --no-git-tag-version",
     "update": "npm version patch --no-git-tag-version ",
-    "start": "node shard"
+    "start": "node shard",
+    "start:prod": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=1024' node shard",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop mhcat",
+    "pm2:restart": "pm2 restart mhcat",
+    "pm2:logs": "pm2 logs mhcat"
   },
   "description": "",
   "main": "index.js",
