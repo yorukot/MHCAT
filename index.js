@@ -70,6 +70,7 @@ const {
     emoji
 } = require("./config.json");
 const mongoose = require("mongoose");
+mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGOOSE_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

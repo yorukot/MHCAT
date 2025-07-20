@@ -83,5 +83,3 @@ process.on("exit", (code) => {
   console.log(code);
   console.log(end_start("=== 褪出 ===\n"));
 });
-process.on("multipleResolves", (type, promise, reason) => {
-});
