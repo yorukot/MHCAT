@@ -144,13 +144,6 @@ process.on("exit", (code) => {
     console.log(code)
     console.log(end_start("=== 褪出 ===\n"));
 });
-process.on("multipleResolves", (type, promise, reason) => {
-    /*console.log(end_start("\n[🚩 崩潰通知] 多個解決方案"));
-    console.log(type)
-    console.log(promise)
-    console.log(reason)
-    console.log(end_start("=== 多個解決方案 ===\n"));*/
-});
 
 client.receiveBotInfo = async () => {
     function format(seconds) {
