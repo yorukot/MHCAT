@@ -7,8 +7,9 @@ const manager = new ShardingManager('./index.js', {
     token: process.env.TOKEN,
     totalShards: 'auto',
     respawn: true,
-    timeout: 120000, // Increased from 30s to 2 minutes
-    spawnTimeout: 120000, // Set spawn timeout to 2 minutes instead of -1 (infinite)
+    timeout: 300000, // Increased to 5 minutes
+    spawnTimeout: 300000, // Increased to 5 minutes
+    mode: 'process', // Explicitly set process mode for better stability
 });
 
 const end_start = chalk.hex("#4DFFFF");
@@ -46,6 +47,11 @@ manager.on('shardCreate', shard => {
     shard.on('death', () => {
         console.log(chalk.hex('#FF0000')(`分片 ${shard.id} 已死亡`));
     });
+
+    // Add error handling for individual shards
+    shard.on('error', (error) => {
+        console.error(chalk.hex('#FF0000')(`分片 ${shard.id} 錯誤:`), error);
+    });
 });
 
 // Add error handling for the manager itself
@@ -53,7 +59,22 @@ manager.on('error', (error) => {
     console.error(chalk.hex('#FF0000')('分片管理器錯誤:'), error);
 });
 
-manager.spawn();
+// Add spawn error handling
+manager.on('spawn', (shard) => {
+    console.log(chalk.hex('#00FF00')(`分片 ${shard.id} 開始生成`));
+});
+
+// Add ready event for manager
+manager.on('ready', () => {
+    console.log(chalk.hex('#00FF00').bold('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓'));
+    console.log(chalk.hex('#00FF00').bold('┃           分片管理器已就緒            ┃'));
+    console.log(chalk.hex('#00FF00').bold('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'));
+});
+
+manager.spawn({ timeout: 300000 }).catch(error => {
+    console.error(chalk.hex('#FF0000')('分片管理器生成失敗:'), error);
+    process.exit(1);
+});
 
 // Error handling
 process.on("unhandledRejection", (reason, p) => {

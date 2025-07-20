@@ -208,6 +208,26 @@ async function loginWithRetry() {
     }
 }
 
+// Add client ready event listener
+client.once('ready', () => {
+    const chalk = require('chalk');
+    console.log(chalk.hex('#00FF00').bold('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓'));
+    console.log(chalk.hex('#00FF00').bold(`┃           分片${client.shard ? client.shard.ids[0] : 0}機器人成功上線            ┃`));
+    console.log(chalk.hex('#00FF00').bold('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'));
+    
+    // Set bot status
+    client.user.setActivity('MHCAT Bot', { type: 'WATCHING' });
+});
+
+// Add client error handling
+client.on('error', (error) => {
+    console.error('Client error:', error);
+});
+
+client.on('warn', (warning) => {
+    console.warn('Client warning:', warning);
+});
+
 // Global error handlers
 process.on("unhandledRejection", (reason, p) => {
     console.log(moment().utcOffset("+08:00").format('YYYYMMDDHHmm'))
