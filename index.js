@@ -44,6 +44,15 @@ const client = new Client({
             lifetime: 300,
         },
     },
+    // Add connection options for better VPS performance
+    ws: {
+        large_threshold: 250,
+        properties: {
+            os: process.platform,
+            browser: 'Discord.js',
+            device: 'Discord.js'
+        }
+    }
 });
 
 module.exports = client;
@@ -54,16 +63,52 @@ const {
 } = require("./config.json");
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', false);
-mongoose.connect(process.env.MONGOOSE_CONNECTION_STRING, {
+
+// Optimize MongoDB connection for VPS
+const mongooseOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    autoIndex: false
-}).then(test => {
+    autoIndex: false,
+    maxPoolSize: 10, // Maintain up to 10 socket connections
+    serverSelectionTimeoutMS: 30000, // Keep trying to send operations for 30 seconds
+    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+    bufferMaxEntries: 0, // Disable mongoose buffering
+    bufferCommands: false, // Disable mongoose buffering
+    heartbeatFrequencyMS: 10000, // Every 10 seconds
+    maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
+    retryWrites: true,
+    retryReads: true
+};
+
+mongoose.connect(process.env.MONGOOSE_CONNECTION_STRING, mongooseOptions).then(test => {
     const chalk = require('chalk')
     console.log(chalk.hex('#28FF28').bold('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓'))
     console.log(chalk.hex('#28FF28').bold('┃          成功連線至資料庫            ┃'))
     console.log(chalk.hex('#28FF28').bold('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'))
-}).catch(err => console.error(err))
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
+    // Don't exit immediately, let the process handle it
+});
+
+// Add MongoDB connection event handlers
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+    console.error('Mongoose connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose disconnected from MongoDB');
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+    await mongoose.connection.close();
+    console.log('MongoDB connection closed through app termination');
+    process.exit(0);
+});
 
 client.commands = new Collection()
 client.config = require('./config.json')
@@ -73,11 +118,16 @@ client.slash_commands = new Collection();
 client.color = color
 client.emoji = emoji
 
-require('./handler/slash_commands');
-require('./handler')(client);
-require('./handler/channel_status');
-require('./handler/gift');
-require('./handler/cron');
+// Load handlers with error handling
+try {
+    require('./handler/slash_commands');
+    require('./handler')(client);
+    require('./handler/channel_status');
+    require('./handler/gift');
+    require('./handler/cron');
+} catch (error) {
+    console.error('Error loading handlers:', error);
+}
 
 const chalk = require('chalk');
 const end_start = chalk.hex('#4DFFFF');
@@ -160,4 +210,25 @@ client.receiveBotInfo = async () => {
     }
 }
 
-client.login(process.env.TOKEN)
+// Add login with retry mechanism for VPS
+let loginAttempts = 0;
+const maxLoginAttempts = 3;
+
+async function loginWithRetry() {
+    try {
+        await client.login(process.env.TOKEN);
+    } catch (error) {
+        loginAttempts++;
+        console.error(`Login attempt ${loginAttempts} failed:`, error);
+        
+        if (loginAttempts < maxLoginAttempts) {
+            console.log(`Retrying login in 5 seconds... (attempt ${loginAttempts + 1}/${maxLoginAttempts})`);
+            setTimeout(loginWithRetry, 5000);
+        } else {
+            console.error('Max login attempts reached. Exiting...');
+            process.exit(1);
+        }
+    }
+}
+
+loginWithRetry();
