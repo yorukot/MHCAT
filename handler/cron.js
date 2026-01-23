@@ -75,10 +75,13 @@ if (client.shard && client.shard.ids[0] === 0) {
         }
     })
     const job = new CronJob(
-        '5 13 * * *',
+        '10 13 * * *',
         async function () {
             const coin = require('../models/coin.js')
             const gift_change = require("../models/gift_change.js");
+
+            const startedAt = new Date();
+            console.log('[cron] daily job start', { iso: startedAt.toISOString() });
 
             try {
                 // Reset "today" for all coins except guilds with active gift_change time.
@@ -104,9 +107,13 @@ if (client.shard && client.shard.ids[0] === 0) {
                 console.error('cron: work energy refill failed', err);
             }
 
+            const finishedAt = new Date();
+            console.log('[cron] daily job done', { iso: finishedAt.toISOString(), durationMs: finishedAt - startedAt });
+
         },
         null,
         true,
         'Asia/Taipei'
     );
+    console.log('[cron] scheduled daily job for 13:05 Asia/Taipei');
 }
