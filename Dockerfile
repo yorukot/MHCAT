@@ -1,61 +1,17 @@
-FROM node:20-alpine AS builder
+# syntax=docker/dockerfile:1
+FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Add build dependencies
-RUN apk add --no-cache \
-    python3 \
-    make \
-    g++ \
-    cairo-dev \
-    jpeg-dev \
-    pango-dev \
-    giflib-dev \
-    pixman-dev \
-    pangomm-dev \
-    libjpeg-turbo-dev \
-    freetype-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ \
+    libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-COPY package*.json ./
-
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
 COPY . .
 
-FROM node:20-alpine AS runner
-
-# Add runtime dependencies for canvas
-RUN apk add --no-cache \
-    cairo \
-    jpeg \
-    pango \
-    giflib \
-    pixman \
-    pangomm \
-    libjpeg-turbo \
-    freetype \
-    ttf-dejavu \
-    fontconfig
-
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
-
-WORKDIR /app
-
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app ./
-
-# Set default environment variables
-ENV NODE_ENV=production \
-    TOKEN="" \
-    MONGOOSE_CONNECTION_STRING="" \
-    JOIN_WEBHOOK="" \
-    LEAVE_WEBHOOK="" \
-    READY_WEBHOOK="" \
-    REPORT_WEBHOOK=""
-
-RUN chown -R nodejs:nodejs /app
-
-USER nodejs
-
+ENV NODE_ENV=production
 CMD ["node", "shard.js"]

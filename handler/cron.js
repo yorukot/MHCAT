@@ -75,56 +75,32 @@ if (client.shard && client.shard.ids[0] === 0) {
         }
     })
     const job = new CronJob(
-        ' 0 0 * * *',
-        function () {
+        '40 12 * * *',
+        async function () {
             const coin = require('../models/coin.js')
             const gift_change = require("../models/gift_change.js");
-            let array = []
-            gift_change.find({}, async (err, data1111) => {
-                if (!data1111) return
-                for (let i = 0; i < data1111.length; i++) {
-                    if (data1111[i].time !== 0) {
-                        array.push(data1111[i].guild)
-                    }
-                }
-            })
-            setTimeout(() => {
-                coin.find({}, async (err, data) => {
-                    if (!data) return;
-                    for (let i = 0; i < data.length; i++) {
-                        if (!array.includes(data[i].guild)) {
-                            data[i].collection.updateOne(({
-                                guild: data[i].guild,
-                                member: data[i].member
-                            }), {
-                                $set: {
-                                    today: 0
-                                }
-                            })
-                        }
-                    }
-                })
-            }, 10000);
 
-            work_set.find({}, async (err, data) => {
-                for (let x = 0; x < data.length; x++) {
-                    work_user.find({
-                        guild: data[x].guild,
-                        energi: {$lt: data[x].max_energy}
-                    }, async (err, data_1) => {
-                        for (let i = 0; i < data.length; i++) {
-                            data_1[i].collection.updateOne(({
-                                guild: data_1[i].guild,
-                                user: data_1[i].user,
-                            }), {
-                                $set: {
-                                    energi: ((data_1[i].energi + data[x].get_energy) > data[x].max_energy) ? data[x].max_energy : data_1[i].energi + data[x].get_energy
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+            try {
+                // Reset "today" for all coins except guilds with active gift_change time.
+                const excludedGuilds = await gift_change.distinct('guild', { time: { $ne: 0 } });
+                await coin.updateMany({ guild: { $nin: excludedGuilds } }, { $set: { today: 0 } });
+            } catch (err) {
+                console.error('cron: coin reset failed', err);
+            }
+
+            try {
+                const workConfigs = await work_set.find({});
+
+                await Promise.all(workConfigs.map(async (config) => {
+                    const { guild, max_energy, get_energy } = config;
+                    // Bump energy where it is below the cap.
+                    await work_user.updateMany({ guild, energi: { $lt: max_energy } }, { $inc: { energi: get_energy } });
+                    // Clamp anything that crossed the cap.
+                    await work_user.updateMany({ guild, energi: { $gt: max_energy } }, { $set: { energi: max_energy } });
+                }));
+            } catch (err) {
+                console.error('cron: work energy refill failed', err);
+            }
 
         },
         null,
