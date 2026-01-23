@@ -75,7 +75,7 @@ if (client.shard && client.shard.ids[0] === 0) {
         }
     })
     const job = new CronJob(
-        '10 13 * * *',
+        '0 0 * * *',
         async function () {
             const coin = require('../models/coin.js')
             const gift_change = require("../models/gift_change.js");
@@ -86,10 +86,10 @@ if (client.shard && client.shard.ids[0] === 0) {
             try {
                 // Reset "today" for all coins except guilds with active gift_change time.
                 const excludedGuilds = await gift_change.distinct('guild', { time: { $ne: 0 } });
-                const coinResult = await coin.updateMany({ guild: { $nin: excludedGuilds } }, { $set: { today: 0 } });
-                console.log('[cron] coin reset', { matched: coinResult.matchedCount, modified: coinResult.modifiedCount, excludedGuilds });
+                await coin.updateMany({ guild: { $nin: excludedGuilds } }, { $set: { today: 0 } });
             } catch (err) {
-                console.error('cron: coin reset failed', err);
+                console.error('cron: daily job failed during coin reset', err);
+                return;
             }
 
             try {
@@ -98,22 +98,22 @@ if (client.shard && client.shard.ids[0] === 0) {
                 await Promise.all(workConfigs.map(async (config) => {
                     const { guild, max_energy, get_energy } = config;
                     // Bump energy where it is below the cap.
-                    const incResult = await work_user.updateMany({ guild, energi: { $lt: max_energy } }, { $inc: { energi: get_energy } });
+                    await work_user.updateMany({ guild, energi: { $lt: max_energy } }, { $inc: { energi: get_energy } });
                     // Clamp anything that crossed the cap.
-                    const clampResult = await work_user.updateMany({ guild, energi: { $gt: max_energy } }, { $set: { energi: max_energy } });
-                    console.log('[cron] work energy refill', { guild, incremented: incResult.modifiedCount, clamped: clampResult.modifiedCount });
+                    await work_user.updateMany({ guild, energi: { $gt: max_energy } }, { $set: { energi: max_energy } });
                 }));
             } catch (err) {
-                console.error('cron: work energy refill failed', err);
+                console.error('cron: daily job failed during energy refill', err);
+                return;
             }
 
             const finishedAt = new Date();
-            console.log('[cron] daily job done', { iso: finishedAt.toISOString(), durationMs: finishedAt - startedAt });
+            console.log('[cron] daily job success', { iso: finishedAt.toISOString(), durationMs: finishedAt - startedAt });
 
         },
         null,
         true,
         'Asia/Taipei'
     );
-    console.log('[cron] scheduled daily job for 13:05 Asia/Taipei');
+    console.log('[cron] scheduled daily job for 00:00 Asia/Taipei');
 }
