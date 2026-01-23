@@ -75,7 +75,7 @@ if (client.shard && client.shard.ids[0] === 0) {
         }
     })
     const job = new CronJob(
-        '40 12 * * *',
+        '5 13 * * *',
         async function () {
             const coin = require('../models/coin.js')
             const gift_change = require("../models/gift_change.js");
@@ -83,7 +83,8 @@ if (client.shard && client.shard.ids[0] === 0) {
             try {
                 // Reset "today" for all coins except guilds with active gift_change time.
                 const excludedGuilds = await gift_change.distinct('guild', { time: { $ne: 0 } });
-                await coin.updateMany({ guild: { $nin: excludedGuilds } }, { $set: { today: 0 } });
+                const coinResult = await coin.updateMany({ guild: { $nin: excludedGuilds } }, { $set: { today: 0 } });
+                console.log('[cron] coin reset', { matched: coinResult.matchedCount, modified: coinResult.modifiedCount, excludedGuilds });
             } catch (err) {
                 console.error('cron: coin reset failed', err);
             }
@@ -94,9 +95,10 @@ if (client.shard && client.shard.ids[0] === 0) {
                 await Promise.all(workConfigs.map(async (config) => {
                     const { guild, max_energy, get_energy } = config;
                     // Bump energy where it is below the cap.
-                    await work_user.updateMany({ guild, energi: { $lt: max_energy } }, { $inc: { energi: get_energy } });
+                    const incResult = await work_user.updateMany({ guild, energi: { $lt: max_energy } }, { $inc: { energi: get_energy } });
                     // Clamp anything that crossed the cap.
-                    await work_user.updateMany({ guild, energi: { $gt: max_energy } }, { $set: { energi: max_energy } });
+                    const clampResult = await work_user.updateMany({ guild, energi: { $gt: max_energy } }, { $set: { energi: max_energy } });
+                    console.log('[cron] work energy refill', { guild, incremented: incResult.modifiedCount, clamped: clampResult.modifiedCount });
                 }));
             } catch (err) {
                 console.error('cron: work energy refill failed', err);
