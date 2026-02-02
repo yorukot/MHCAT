@@ -344,21 +344,27 @@ module.exports = {
                         guild: interaction.guild.id,
                         member: interaction.member.id
                     }, async (err, data) => {
+                        const year = moment().utcOffset('+08:00').format('yyyy');
+                        const month = moment().utcOffset('+08:00').format('MM');
+                        const calendarRows = calebdar.calendar.length;
+                        const startY = 252;
+                        const rowHeight = 75;
+                        const iconStartY = 202;
+
                         for (let x = 0; x < 7; x++) {
                             ctx.font = "45px Comic Sans MS";
                             ctx.fillStyle = x === 0 || x === 6 ? "#Ff0000" : "#A8FF24";
-                            ctx.fillText(`${calebdar.calendar[0][x] === 0? '': calebdar.calendar[0][x]}`, 55 + x * 128, 252);
-                            ctx.fillText(`${calebdar.calendar[1][x] === 0? '': calebdar.calendar[1][x]}`, 55 + x * 128, 327);
-                            ctx.fillText(`${calebdar.calendar[2][x] === 0? '': calebdar.calendar[2][x]}`, 55 + x * 128, 402);
-                            ctx.fillText(`${calebdar.calendar[3][x] === 0? '': calebdar.calendar[3][x]}`, 55 + x * 128, 477);
-                            ctx.fillText(`${calebdar.calendar[4][x] === 0? '': calebdar.calendar[4][x]}`, 55 + x * 128, 552);
-                            if (calebdar[5]) ctx.fillText(`${calebdar.calendar[5][x] === 0? '': calebdar.calendar[5][x]}`, 55 + x * 128, 627);
-                            if (data ? data.date[moment().utcOffset('+08:00').format('yyyy')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')].includes(`${calebdar.calendar[0][x]}`) : false : false : false) ctx.drawImage(imggg, 115 + x * 128, 202)
-                            if (data ? data.date[moment().utcOffset('+08:00').format('yyyy')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')].includes(`${calebdar.calendar[1][x]}`) : false : false : false) ctx.drawImage(imggg, 115 + x * 128, 277)
-                            if (data ? data.date[moment().utcOffset('+08:00').format('yyyy')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')].includes(`${calebdar.calendar[2][x]}`) : false : false : false) ctx.drawImage(imggg, 115 + x * 128, 352)
-                            if (data ? data.date[moment().utcOffset('+08:00').format('yyyy')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')].includes(`${calebdar.calendar[3][x]}`) : false : false : false) ctx.drawImage(imggg, 115 + x * 128, 427)
-                            if (data ? data.date[moment().utcOffset('+08:00').format('yyyy')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')].includes(`${calebdar.calendar[4][x]}`) : false : false : false) ctx.drawImage(imggg, 115 + x * 128, 502)
-                            if (data ? data.date[moment().utcOffset('+08:00').format('yyyy')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')] ? data.date[moment().utcOffset('+08:00').format('yyyy')][moment().utcOffset('+08:00').format('MM')].includes(`${calebdar[5] ? calebdar.calendar[5][x] : "321312312321321321312321"}`) : false : false : false) ctx.drawImage(imggg, 115 + x * 128, 577)
+
+                            for (let row = 0; row < calendarRows; row++) {
+                                const day = calebdar.calendar[row][x];
+                                const dayText = day === 0 ? '' : day;
+                                const textY = startY + row * rowHeight;
+                                ctx.fillText(`${dayText}`, 55 + x * 128, textY);
+
+                                if (day && data?.date?.[year]?.[month]?.includes(`${day}`)) {
+                                    ctx.drawImage(imggg, 115 + x * 128, iconStartY + row * rowHeight);
+                                }
+                            }
                         }
                         ctx.fillStyle = "#FFFFFF";
                         ctx.font = "30px font_new, TC, SC, JP, HK, font, Bengali, Arabic, emoji";
